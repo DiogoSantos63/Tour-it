@@ -14,4 +14,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Tour-it"
-include(":app")
+include(":A_apps")
+include(":B_features")
+include(":C_datas")
+include(":D_networks")
+include(":E_producer")
