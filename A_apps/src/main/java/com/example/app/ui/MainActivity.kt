@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.app.navigation.AppNavHost
+import com.example.features.profile.ui.ProfileScreen
 import com.example.producer.theme.TouritTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavHost(navController = rememberNavController())
+                    ProfileScreen()
+                    //AppNavHost(navController = rememberNavController())
                 }
             }
         }
