@@ -2,6 +2,7 @@ package com.example.features.homepage.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -45,23 +47,33 @@ fun HomePageScreen() {
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
-            MediumTopAppBar(
-                title = {
-                    Image(
-                        painter = painterResource(id = R.drawable.logo_tour_it),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(start = 100.dp, top = 16.dp)
-                            .size(170.dp)
-                    )
-                },
-                actions = {
-                    GAProfileCircle(
-                        imageUrl = "https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--914bcfe0-f610-4610-a77e-6ea53c53f630/_330603286208.app.png?preferwebp=true&width=312",
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                }
-            )
+            Surface(
+                color = Color(0xFF313131),
+
+            ) {
+                MediumTopAppBar(
+                    title = {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo_tour_it),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 100.dp, top = 16.dp)
+                                .size(170.dp)
+
+                        )
+                    },
+                    actions = {
+                        GAProfileCircle(
+                            imageUrl = "https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--914bcfe0-f610-4610-a77e-6ea53c53f630/_330603286208.app.png?preferwebp=true&width=312",
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                    },
+                    modifier = Modifier
+                        .background(Color(0xFF313131))
+
+                )
+            }
+
         },
         content = {
             Column(
