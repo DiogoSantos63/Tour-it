@@ -1,4 +1,4 @@
-package com.tour_it.datas.service
+package com.tour_it.datas.services
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
