@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270289580359",
+    "project_id": "tour-it-c516b",
+    "storage_bucket": "tour-it-c516b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270289580359:android:81c8fa692ed26c76305c62",
+        "android_client_info": {
+          "package_name": "com.example.tour_it"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNMQcZoYU0dYpQiiwizMRbC_2pt3GKgos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
