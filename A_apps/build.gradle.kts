@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -53,6 +54,17 @@ dependencies {
     //Modules
     implementation(project(":E_producer"))
     implementation(project(":B_features"))
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    //Splash
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
 
     //Koin
     implementation("io.insert-koin:koin-androidx-compose:3.5.0")

@@ -37,6 +37,11 @@ dependencies {
     implementation(project(":E_producer"))
     implementation(project(":D_networks"))
 
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
     //Koin
     implementation("io.insert-koin:koin-androidx-compose:3.5.0")
 
