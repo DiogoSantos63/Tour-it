@@ -8,5 +8,6 @@ data class HotelRoom(
     val beds: List<BedType>,
     val numberOfBeds: Int,
     val hasPrivateBathroom: Boolean,
-    val amenities: List<String>
+    val amenities: List<String>,
+    val image: String
 )

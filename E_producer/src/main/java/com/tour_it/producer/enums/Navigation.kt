@@ -7,5 +7,7 @@ enum class Navigation {
     HOME,
     HOMEPAGE,
     SPLASH,
-    SPLASH_SCREEN
+    SPLASH_SCREEN,
+    MAP,
+    MAP_SCREEN
 }
