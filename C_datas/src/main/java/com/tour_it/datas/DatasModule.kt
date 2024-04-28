@@ -4,8 +4,6 @@ import com.tour_it.datas.map.repos.event.EventRepository
 import com.tour_it.datas.map.repos.event.EventRepositoryImpl
 import com.tour_it.datas.map.repos.hotel.HotelRepository
 import com.tour_it.datas.map.repos.hotel.HotelRepositoryImpl
-import com.tour_it.datas.map.repos.location.LocationRepository
-import com.tour_it.datas.map.repos.location.LocationRepositoryImpl
 import com.tour_it.datas.map.repos.mock.MockData
 import com.tour_it.datas.map.repos.restaurant.RestaurantRepository
 import com.tour_it.datas.map.repos.restaurant.RestaurantRepositoryImpl
@@ -22,6 +20,5 @@ val datasModule: Module = module {
     single<RestaurantRepository> { RestaurantRepositoryImpl(get()) }
     single<HotelRepository> { HotelRepositoryImpl(get()) }
     single<EventRepository> { EventRepositoryImpl(get()) }
-    single<LocationRepository> { LocationRepositoryImpl(get()) }
     single { MockData(get()) }
 }

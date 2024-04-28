@@ -4,9 +4,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.tour_it.datas.map.usecases.toEventEntity
 import com.tour_it.datas.map.usecases.toHotelEntity
+import com.tour_it.datas.map.usecases.toRestaurantEntity
+import com.tour_it.producer.enums.PriceRange
 import com.tour_it.producer.models.products.Event
 import com.tour_it.producer.models.products.Hotel
 import com.tour_it.producer.models.products.Location
+import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.sources.room.databases.TourItDB
 import kotlinx.coroutines.coroutineScope
 import java.time.LocalDateTime
@@ -59,6 +62,31 @@ class MockData(
         database.eventDao().deleteAllEvents()
         events.forEach { event ->
             database.eventDao().insertEvent(event.toEventEntity())
+        }
+    }
+
+    suspend fun insertRestaurants(){
+        val restaurants = listOf(
+            Restaurant(
+                name = "Praxis",
+                cuisine = "Bar, Europeia, Portuguesa",
+                location = Location(
+                    40.202121618204146,
+                    -8.461158796071496,
+                    "Rua António Gonçalves ",
+                    "Coimbra",
+                    "Coimbra",
+                    "3040-375",
+                    "Portugal"
+                ),
+                rating = 3.5,
+                image = "https://lh3.googleusercontent.com/p/AF1QipPR4LmxNVUuAotjXtwoRyqpsaXyy34oODnCVIjT=s680-w680-h510",
+                priceRange = PriceRange.MODERATE
+            )
+        )
+        database.restaurantDao().deleteAllRestaurants()
+        restaurants.forEach { restaurant ->
+            database.restaurantDao().insertRestaurant(restaurant.toRestaurantEntity())
         }
     }
 }

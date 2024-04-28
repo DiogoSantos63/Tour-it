@@ -19,7 +19,7 @@ fun AppNavHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.HomePage.route
+        startDestination = NavigationItem.Map.route
     ){
         splash(navController)
         authentication(navController)

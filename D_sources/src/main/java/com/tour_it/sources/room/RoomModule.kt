@@ -17,5 +17,4 @@ val roomModule: Module = module {
     single { get<TourItDB>().hotelDao() }
     single { get<TourItDB>().eventDao() }
     single { get<TourItDB>().restaurantDao() }
-    single { get<TourItDB>().locationDao() }
 }

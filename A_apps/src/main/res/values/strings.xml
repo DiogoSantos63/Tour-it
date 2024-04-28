@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Tour-it</string>
-    <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">sk.eyJ1IjoiZGlvZ29ic2FudG9zNjMiLCJhIjoiY2x2Z2t3dDE5MHh1MzJrbzVlc2F4MTRpMCJ9.e0jUN9AxAoPsZwDC5maXXA</string>
 </resources>

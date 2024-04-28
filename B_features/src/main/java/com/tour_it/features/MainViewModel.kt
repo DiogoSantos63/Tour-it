@@ -20,6 +20,7 @@ class MainViewModel(
         viewModelScope.launch {
             mockData.insertEvents()
             mockData.insertHotels()
+            mockData.insertRestaurants()
         }
     }
 

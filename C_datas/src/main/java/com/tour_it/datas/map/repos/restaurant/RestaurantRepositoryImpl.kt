@@ -14,8 +14,8 @@ class RestaurantRepositoryImpl(
         dao.insertRestaurant(restaurant.toRestaurantEntity())
     }
 
-    override suspend fun deleteRestaurant(restaurant: Restaurant) {
-        dao.deleteRestaurant(restaurant.toRestaurantEntity())
+    override suspend fun deleteAllRestaurants() {
+       dao.deleteAllRestaurants()
     }
 
     override suspend fun getRestaurants(): Flow<List<Restaurant>> {

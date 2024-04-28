@@ -9,7 +9,7 @@ import com.tour_it.producer.models.products.Location
 data class HotelEntity(
     @PrimaryKey(autoGenerate = true) val hotelId: Int = 0,
     val name: String,
-    @Embedded val location: LocationEntity,
+    @Embedded val location: Location,
     val rating: Double,
     val image: String
 )

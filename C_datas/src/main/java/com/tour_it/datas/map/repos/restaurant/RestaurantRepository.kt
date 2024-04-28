@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RestaurantRepository {
     suspend fun insertRestaurant(restaurant: Restaurant)
-    suspend fun deleteRestaurant(restaurant: Restaurant)
+    suspend fun deleteAllRestaurants()
     suspend fun getRestaurants(): Flow<List<Restaurant>>
 }

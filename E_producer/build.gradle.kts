@@ -62,8 +62,14 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    //Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
     //Koin
     implementation("io.insert-koin:koin-androidx-compose:3.5.0")
+
 
     //Compose
     implementation("androidx.activity:activity-compose:1.9.0")

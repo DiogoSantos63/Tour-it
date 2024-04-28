@@ -10,7 +10,7 @@ data class EventEntity(
     @PrimaryKey(autoGenerate = true) val eventId: Int = 0,
     val name: String,
     val type: String,
-    @Embedded val location: LocationEntity,
+    @Embedded val location: Location,
     val dateTime: String,
     val image: String
 )
