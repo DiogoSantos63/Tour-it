@@ -22,6 +22,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,9 +38,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.b_features.R
+import com.tour_it.features.authentication.AuthenticationViewModel
 import com.tour_it.producer.components.GABottomBarNavigation
 import com.tour_it.producer.components.GATopBar
 import com.tour_it.producer.components.ProductCardPoints
+import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,11 +51,17 @@ fun HomePageScreen(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
+    var viewModel: AuthenticationViewModel = getViewModel()
+
+    LaunchedEffect(true) {
+        viewModel.getAccoutUserName()
+    }
+    val userName by viewModel.userName.collectAsState()
 
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
-            GATopBar()
+            GATopBar(navController)
         },
         content = {
             Column(
@@ -72,7 +83,7 @@ fun HomePageScreen(
                                     append(", ")
                                 }
                                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                    append("user!")
+                                    append("${userName}")
                                 }
                             },
                             fontSize = 24.sp,
@@ -191,7 +202,7 @@ fun HomePageScreen(
                 )
             }*/
             Surface(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
-                GABottomBarNavigation()
+                GABottomBarNavigation(navController)
             }
         }
     )

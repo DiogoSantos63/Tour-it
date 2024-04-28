@@ -11,5 +11,7 @@ data class HotelEntity(
     val name: String,
     @Embedded val location: Location,
     val rating: Double,
-    val image: String
+    val image: String,
+    val pricePerNight: Double,
+    val userPoints: Int
 )

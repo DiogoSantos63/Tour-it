@@ -1,4 +1,4 @@
-package com.tour_it.features.cart.compose
+package com.tour_it.features.cart.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

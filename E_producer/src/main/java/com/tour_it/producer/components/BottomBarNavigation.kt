@@ -1,5 +1,6 @@
 package com.tour_it.producer.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,9 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
+import androidx.navigation.NavController
+import com.tour_it.producer.navigation.NavigationItem
 
 @Composable
 fun GABottomBarNavigation(
+    navController: NavController
 ) {
     Box {
         BottomAppBar {
@@ -36,29 +40,45 @@ fun GABottomBarNavigation(
                 horizontalArrangement = Arrangement.spacedBy(40.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(NavigationItem.HomePageScreen.route)
+                        }
+                        .padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.Center,
                 ) {
                     BottomNavigationItem(icon = Icons.Default.Home)
                     Text(text = "Home")
                 }
                 Column(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(NavigationItem.PointsScreen.route)
+                        }
+                        .padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.Center,
 
                     ) {
-                    BottomNavigationItem(icon = Icons.Default.Star) //meter icon de point / coins
+                    BottomNavigationItem(icon = Icons.Default.Star)
                     Text(text = "Points")
                 }
                 Column(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(NavigationItem.SearchScreen.route)
+                        }
+                        .padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.Center,
                 ) {
                     BottomNavigationItem(icon = Icons.Default.Search)
                     Text(text = "Search")
                 }
                 Column(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(NavigationItem.CartScreen.route)
+                        }
+                        .padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.Center,
                 ) {
                     BottomNavigationItem(icon = Icons.Default.ShoppingCart)
@@ -81,12 +101,4 @@ private fun BottomNavigationItem(icon: ImageVector) {
             .width(24.dp)
             .height(24.dp)
     )
-}
-
-@Preview
-@Composable
-fun GABottomBarNavigationPreview() {
-    Surface(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
-        GABottomBarNavigation()
-    }
 }

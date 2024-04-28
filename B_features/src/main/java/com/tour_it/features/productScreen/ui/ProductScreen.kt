@@ -1,4 +1,4 @@
-package com.tour_it.features.productScreen
+package com.tour_it.features.productScreen.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -26,17 +26,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import com.example.b_features.R
-import com.tour_it.features.productScreen.compose.SelectDate
 import com.tour_it.producer.components.GAProfileCircle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProductScreen(
-    productName: String,
-    valueProdut: String,
+    navController: NavController,
+    backStackEntry: NavBackStackEntry
 ) {
+
+   val productName: String = "Teste"
+   val valueProdut: String = "20"
+
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -65,6 +70,7 @@ fun ProductScreen(
                 actions = {
                     IconButton(onClick = { /* do something */ }) {
                         GAProfileCircle(
+                            navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -188,14 +194,5 @@ fun ProductScreen(
             }
 
         }
-    )
-}
-
-@Preview
-@Composable
-fun ProductScreenPreview() {
-    ProductScreen(
-        productName = "Hotel Vila Galé",
-        valueProdut = "4.5"
     )
 }

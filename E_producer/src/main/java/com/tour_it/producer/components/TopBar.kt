@@ -1,6 +1,7 @@
 package com.tour_it.producer.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,11 +19,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.e_producer.R
+import com.tour_it.producer.navigation.NavigationItem
 
 
 @Composable
-fun GATopBar() {
+fun GATopBar(
+    navController: NavController
+) {
     Surface(
         color = Color(0xFF313131),
     ) {
@@ -41,6 +46,7 @@ fun GATopBar() {
                 )
                 Spacer(modifier = Modifier.width(50.dp))
                 GAProfileCircle(
+                    navController = navController,
                     image = R.drawable.sem_t_tulo,
                     modifier = Modifier
                         .padding(16.dp)
@@ -51,8 +57,17 @@ fun GATopBar() {
 }
 
 @Composable
-fun GAProfileCircle(image: Int, modifier: Modifier = Modifier) {
-    Box {
+fun GAProfileCircle(
+    navController: NavController,
+    image: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier
+            .clickable {
+                navController.navigate(NavigationItem.ProfileScreen.route)
+            }
+    ) {
         Image(
             painter = painterResource(id = image),
             contentDescription = null,
@@ -61,10 +76,4 @@ fun GAProfileCircle(image: Int, modifier: Modifier = Modifier) {
                 .clip(CircleShape)
         )
     }
-}
-
-@Preview
-@Composable
-fun GATopBarPreview() {
-    GATopBar()
 }

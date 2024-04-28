@@ -1,4 +1,4 @@
-package com.tour_it.features.searchScreen
+package com.tour_it.features.searchScreen.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -34,8 +34,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import com.example.b_features.R
-import com.tour_it.features.productScreen.compose.ShowProduct
+import com.tour_it.features.productScreen.ui.ShowProduct
 import com.tour_it.producer.components.GABottomBarNavigation
 import com.tour_it.producer.components.GAProfileCircle
 
@@ -43,7 +45,10 @@ import com.tour_it.producer.components.GAProfileCircle
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    navController: NavController,
+    backStackEntry: NavBackStackEntry
+) {
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -64,6 +69,7 @@ fun SearchScreen() {
                 actions = {
                     IconButton(onClick = { /* do something */ }) {
                         GAProfileCircle(
+                            navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -123,15 +129,8 @@ fun SearchScreen() {
         },
         bottomBar = {
             Surface(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
-                GABottomBarNavigation()
+                GABottomBarNavigation(navController )
             }
         }
     )
-
-}
-
-@Preview
-@Composable
-fun SearchScreenPreview() {
-    SearchScreen()
 }

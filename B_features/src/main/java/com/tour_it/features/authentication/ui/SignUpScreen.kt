@@ -17,9 +17,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,6 +51,10 @@ fun SignUpScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var passWord by remember { mutableStateOf("") }
+    var userName by remember { mutableStateOf("") }
+    var showAlertDialog by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+
 
     val viewModel: AuthenticationViewModel = getViewModel()
     Box(
@@ -93,18 +100,36 @@ fun SignUpScreen(
                         color = Color.White
                     )
                     TextField(
+                        value = userName,
+                        onValueChange = {
+                            userName = it
+                            viewModel.updateUserName(it)
+                        },
+                        placeholder = { Text("Jonh_Doe", color = Color.Gray) },
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(onDone = { viewModel.updateUserName(userName) }),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        modifier = Modifier
+                            .padding(10.dp),
+                        text = "Email",
+                        color = Color.White
+                    )
+                    TextField(
                         value = email,
                         onValueChange = {
                             email = it
                             viewModel.updateEmail(it)
                         },
-                        placeholder = { Text("Jonh_Doe", color = Color.Gray) },
+                        placeholder = { Text("Jonh_Doe@gmail.com", color = Color.Gray) },
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                         keyboardActions = KeyboardActions(onDone = { viewModel.updateEmail(email) }),
                         modifier = Modifier
                             .fillMaxWidth()
                     )
-                    Spacer(modifier = Modifier.height(32.dp))
                     Text(
                         modifier = Modifier
                             .padding(10.dp),
@@ -132,12 +157,36 @@ fun SignUpScreen(
                         label = "Sign Up",
                         size = 40,
                         onClick = {
-                            viewModel.onSignUpClick { _, _ ->
-                                navController.popBackStack(NavigationItem.SignUpScreen.route, true)
-                                navController.navigate(NavigationItem.SignInScreen.route)
+                            if (email.isBlank() || userName.isBlank() || passWord.isBlank()) {
+                                errorMessage = when {
+                                    email.isBlank() -> "Email is required."
+                                    userName.isBlank() -> "Username is required."
+                                    else -> "Password is required."
+                                }
+                                showAlertDialog = true
+                            } else {
+                                viewModel.onSignUpClick { _, _ ->
+                                    navController.popBackStack(NavigationItem.SignUpScreen.route, true)
+                                    navController.navigate(NavigationItem.SignInScreen.route)
+                                }
                             }
                         }
                     )
+                    if (showAlertDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showAlertDialog = false },
+                            title = { Text(text = "Error") },
+                            text = { Text(text = errorMessage) },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = { showAlertDialog = false },
+                                    colors = ButtonDefaults.textButtonColors(contentColor = Color.Red)
+                                ) {
+                                    Text("OK")
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }

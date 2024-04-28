@@ -1,4 +1,4 @@
-package com.tour_it.features.profile
+package com.tour_it.features.profile.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -37,13 +37,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import com.example.e_producer.R
-import com.tour_it.features.cart.compose.CartCompose
+import com.tour_it.features.authentication.AuthenticationViewModel
+import com.tour_it.features.cart.ui.CartCompose
+import com.tour_it.producer.components.GenericButton
+import com.tour_it.producer.navigation.NavigationItem
+import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    navController: NavController,
+    backStackEntry: NavBackStackEntry
+) {
+    val viewModel: AuthenticationViewModel = getViewModel()
+
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -61,7 +72,7 @@ fun ProfileScreen() {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
@@ -153,29 +164,16 @@ fun ProfileScreen() {
                     .padding(vertical = 50.dp)
                     .padding(start = 50.dp)
             ) {
-                Text(
-                    text = "Log out",
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.width(40.dp))
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(60.dp)
-                        .background(color = Color.White, shape = CircleShape)
-                ) {
-                    Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
-                }
+                GenericButton(
+                    label = "Log out",
+                    size = 40,
+                    onClick = {
+                        viewModel.onSignOutClick() { _, _ ->
+                            navController.popBackStack(NavigationItem.ProfileScreen.route, true)
+                            navController.navigate(NavigationItem.SignInScreen.route)
+                        }
+                    })
             }
-
         }
     )
-}
-
-@Preview
-@Composable
-fun ProfileScreenPreview() {
-    ProfileScreen()
 }

@@ -13,6 +13,7 @@ import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.sources.room.databases.TourItDB
 import kotlinx.coroutines.coroutineScope
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class MockData(
     private val database: TourItDB
@@ -31,7 +32,9 @@ class MockData(
                     "Portugal"
                 ),
                 rating = 4.0,
-                image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5EIFf3DnerreCBSDs47tYOZtoSKbU7qqCdRRSNtDHZ9lujdlrFbpSADgHZM498ajQ4FM&usqp=CAU"
+                image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5EIFf3DnerreCBSDs47tYOZtoSKbU7qqCdRRSNtDHZ9lujdlrFbpSADgHZM498ajQ4FM&usqp=CAU",
+                pricePerNight = 70.0,
+                userPoints = 50
             )
         )
         database.hotelDao().deleteAllHotels()
@@ -56,7 +59,9 @@ class MockData(
                     "Portugal"
                 ),
                 dateTime = LocalDateTime.of(2024, 5, 24, 23, 30).toString(),
-                image = "https://images.impresa.pt/expresso/2023-04-27-281341664_2246515882164408_1294832501802301189_n.jpg-e74db27b"
+                image = "https://images.impresa.pt/expresso/2023-04-27-281341664_2246515882164408_1294832501802301189_n.jpg-e74db27b",
+                price = 70.0,
+                userPoints = 25
             )
         )
         database.eventDao().deleteAllEvents()
@@ -65,6 +70,7 @@ class MockData(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun insertRestaurants(){
         val restaurants = listOf(
             Restaurant(
@@ -81,7 +87,10 @@ class MockData(
                 ),
                 rating = 3.5,
                 image = "https://lh3.googleusercontent.com/p/AF1QipPR4LmxNVUuAotjXtwoRyqpsaXyy34oODnCVIjT=s680-w680-h510",
-                priceRange = PriceRange.MODERATE
+                priceRange = PriceRange.MODERATE,
+                openingTime = LocalTime.now().minusHours(12),
+                closingTime = LocalTime.now().minusHours(1),
+                userPoints = 10
             )
         )
         database.restaurantDao().deleteAllRestaurants()

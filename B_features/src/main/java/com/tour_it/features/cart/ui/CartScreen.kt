@@ -1,9 +1,18 @@
-package com.tour_it.features.cart
+package com.tour_it.features.cart.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,14 +37,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import com.example.e_producer.R
-import com.tour_it.features.cart.compose.CartCompose
 import com.tour_it.producer.components.GAProfileCircle
+import com.tour_it.producer.navigation.NavigationItem
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartScreen() {
+fun CartScreen(
+    navController: NavController,
+    backStackEntry: NavBackStackEntry
+) {
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -53,7 +67,7 @@ fun CartScreen() {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
@@ -62,8 +76,9 @@ fun CartScreen() {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(NavigationItem.ProfileScreen.route) }) {
                         GAProfileCircle(
+                            navController = navController,
                             image = R.drawable.sem_t_tulo,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -214,12 +229,4 @@ fun CartScreen() {
 
         }
     )
-
-}
-
-
-@Preview
-@Composable
-fun CartScreenPreview() {
-    CartScreen()
 }

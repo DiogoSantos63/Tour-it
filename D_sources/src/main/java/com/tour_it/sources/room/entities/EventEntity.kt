@@ -12,5 +12,7 @@ data class EventEntity(
     val type: String,
     @Embedded val location: Location,
     val dateTime: String,
-    val image: String
+    val image: String,
+    val price: Double,
+    val userPoints: Int
 )

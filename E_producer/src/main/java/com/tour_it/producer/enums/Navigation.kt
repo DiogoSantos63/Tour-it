@@ -9,5 +9,15 @@ enum class Navigation {
     SPLASH,
     SPLASH_SCREEN,
     MAP,
-    MAP_SCREEN
+    MAP_SCREEN,
+    POINTS,
+    POINTS_SCREEN,
+    SEARCH,
+    SEARCH_SCREEN,
+    CART,
+    CART_SCREEN,
+    PRODUCT,
+    PRODUCT_SCREEN,
+    PROFILE,
+    PROFILE_SCREEN
 }
