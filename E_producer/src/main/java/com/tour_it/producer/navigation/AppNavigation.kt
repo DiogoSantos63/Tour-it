@@ -10,4 +10,6 @@ sealed class NavigationItem(val route: String){
     object HomePageScreen: NavigationItem(Navigation.HOMEPAGE.name)
     object SplashScreen: NavigationItem(Navigation.SPLASH_SCREEN.name)
     object Splash: NavigationItem(Navigation.SPLASH.name)
+    object Map: NavigationItem(Navigation.MAP.name)
+    object MapScreen: NavigationItem(Navigation.MAP_SCREEN.name)
 }

@@ -17,5 +17,5 @@ rootProject.name = "Tour-it"
 include(":A_apps")
 include(":B_features")
 include(":C_datas")
-include(":D_networks")
+include(":D_sources")
 include(":E_producer")

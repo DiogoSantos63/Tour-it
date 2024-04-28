@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -41,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.12"
     }
     packaging {
         resources {
@@ -55,9 +56,17 @@ dependencies {
     implementation(project(":E_producer"))
     implementation(project(":B_features"))
 
+    // Google maps
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.2.0")
+    // Google maps for compose
+    implementation ("com.google.maps.android:maps-compose:2.8.0")
+
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
     //Splash
     implementation("androidx.core:core-splashscreen:1.0.0")
 
