@@ -1,4 +1,4 @@
-package com.tour_it.features.productScreen.compose
+package com.example.features.searchScreen.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
