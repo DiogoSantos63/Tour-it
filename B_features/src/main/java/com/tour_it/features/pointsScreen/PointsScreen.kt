@@ -1,4 +1,4 @@
-package com.tour_it.features.homepage.ui
+package com.tour_it.features.pointsScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -12,13 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +28,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,20 +41,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.b_features.R
-import com.tour_it.features.homepage.ui.compose.ProductHome
-import com.tour_it.producer.components.bottombarnavigation.GABottomBarNavigation
+import com.tour_it.features.pointsScreen.compose.ShowProductPoints
 import com.tour_it.producer.components.GAProfileCircle
+import com.tour_it.producer.components.bottombarnavigation.GABottomBarNavigation
 import com.tour_it.producer.components.bottombarnavigation.items
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePageScreen(
-    /*    navController: NavController,
-        backStackEntry: NavBackStackEntry*/
-) {
-
+fun PointsScreen() {
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -95,20 +88,31 @@ fun HomePageScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Welcome",
-                            fontSize = 24.sp,
-                            color = Color(0xFFB5B5B5)
-                        )
-                        Text(
                             text = buildAnnotatedString {
-                                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                    append(", ")
-                                }
-                                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                    append("user !")
+                                withStyle(
+                                    style = SpanStyle(
+                                        fontSize = 30.sp
+                                    )
+                                ) {
+                                    append("Points:")
                                 }
                             },
-                            fontSize = 24.sp,
+                            fontSize = 40.sp,
+                            color = Color(0xFFB5B5B5)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 30.sp
+                                    )
+                                ) {
+                                    append("455")
+                                }
+                            },
+                            fontSize = 40.sp,
                             color = Color.White
                         )
                     }
@@ -119,74 +123,19 @@ fun HomePageScreen(
                         modifier = Modifier.padding(end = 130.dp)
                     )
                 }
-                Spacer(modifier = Modifier.height(60.dp))
-                Column {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Default.KeyboardArrowRight,
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.White
-                        )
-                        Text(
-                            text = "Near you",
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                        Spacer(modifier = Modifier.width(150.dp))
-
-                        TextButton(
-                            onClick = {},
-                            content = {
-                                Text(
-                                    "See All",
-                                    fontSize = 16.sp,
-                                    color = Color.White
-                                )
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-                    LazyRow {
-                        items(3) {
-                            ProductHome(
-                                image = R.drawable.rectangle_18,
+                Spacer(modifier = Modifier.height(32.dp))
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                ) {
+                    items(9) { index ->
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        ) {
+                            ShowProductPoints(
+                                image = com.example.b_features.R.drawable.rectangle_18,
                                 productName = "O Açude",
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(40.dp))
-                Column {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Default.Star,
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.White
-                        )
-                        Text(
-                            text = "Promos",
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                        Spacer(modifier = Modifier.width(150.dp))
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-                    LazyRow {
-                        items(3) {
-                            ProductHome(
-                                image = R.drawable.rectangle_18,
-                                productName = "O Açude",
+                                points = "400"
                             )
                         }
                     }
@@ -226,8 +175,6 @@ fun HomePageScreen(
 
 @Preview
 @Composable
-fun HomePageScreenPreview() {
-    HomePageScreen()
+fun PointsScreenPreview() {
+    PointsScreen()
 }
-
-

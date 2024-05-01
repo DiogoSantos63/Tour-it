@@ -156,7 +156,7 @@ fun ProductScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        SelectDate(modifier = Modifier)
+                        SelectDate(modifier = Modifier.fillMaxWidth())
 
                     }
                 }

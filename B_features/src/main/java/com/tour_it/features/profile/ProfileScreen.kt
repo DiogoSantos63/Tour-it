@@ -52,13 +52,7 @@ fun ProfileScreen() {
                     containerColor = Color(0xFF313131)
                 ),
                 title = {
-                    Image(
-                        painter = painterResource(id = R.drawable.sem_t_tulo),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(CircleShape)
-                    )
+
                 },
                 navigationIcon = {
                     IconButton(onClick = { /* do something */ }) {
@@ -78,17 +72,21 @@ fun ProfileScreen() {
             )
         },
         content = {
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 80.dp)
+                    .padding(top = 70.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .align(Alignment.TopCenter)
-                ) {
+                Column{
                     Column {
+                        Image(
+                            painter = painterResource(id = R.drawable.sem_t_tulo),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(90.dp)
+                                .clip(CircleShape)
+                        )
                         Text(
                             text = "Jonh_Doe", fontSize = 24.sp, color = Color.White
                         )

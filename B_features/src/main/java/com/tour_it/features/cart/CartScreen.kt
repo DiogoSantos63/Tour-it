@@ -75,7 +75,7 @@ fun CartScreen() {
         content = {
             Column(
                 modifier = Modifier
-                    .padding(top = 80.dp)
+                    .padding(top = 100.dp)
                     .padding(horizontal = 16.dp)
             ) {
 
@@ -91,11 +91,11 @@ fun CartScreen() {
                             contentDescription = null,
                             tint = Color.White,
                             modifier = Modifier
-                                .size(24.dp)
+                                .size(26.dp)
                         )
                         Text(
                             text = "Cart",
-                            fontSize = 24.sp,
+                            fontSize = 26.sp,
                             color = Color.White
                         )
                     }
@@ -118,20 +118,19 @@ fun CartScreen() {
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(8.dp))
                 Divider(
                     thickness = 4.dp,
-                    color = Color.White,
+                    color = Color(0xFFB5B5B5),
                     modifier = Modifier
                         .padding(end = 270.dp, top = 4.dp)
                 )
                 Spacer(modifier = Modifier.height(28.dp))
                 CartCompose()
-                Spacer(modifier = Modifier.height(8.dp))
                 CartCompose()
-                Spacer(modifier = Modifier.height(8.dp))
                 CartCompose()
-                Spacer(modifier = Modifier.height(40.dp))
 
+                Spacer(modifier = Modifier.height(40.dp))
                 Row {
                     Column {
                         Text(text = "Promo code", fontSize = 12.sp, color = Color.White)
@@ -162,11 +161,11 @@ fun CartScreen() {
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                imageVector = Icons.Default.Star,
+                                painter = painterResource(id = R.drawable.coins),
                                 contentDescription = null,
-                                tint = Color.White
+                                tint = Color.White,
                             )
-                            Spacer(modifier = Modifier.width(4.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "25 Points",
                                 color = Color.White,
