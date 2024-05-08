@@ -44,7 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.b_features.R
-import com.tour_it.features.pointsScreen.compose.ShowProductPoints
 import com.tour_it.features.productScreen.compose.ShowProduct
 import com.tour_it.producer.components.bottombarnavigation.GABottomBarNavigation
 import com.tour_it.producer.components.GAProfileCircle
