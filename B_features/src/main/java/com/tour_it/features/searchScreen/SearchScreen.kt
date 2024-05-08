@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -147,6 +148,7 @@ fun SearchScreen() {
                 containerColor = Color(0xFFB5B5B5),
                 modifier = Modifier
                     .size(70.dp)
+                    .offset(x = 0.dp, y = 50.dp)
             ) {
                 Box(
                     modifier = Modifier
