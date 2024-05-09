@@ -8,16 +8,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
@@ -63,20 +62,14 @@ fun ProfileScreen(
                     containerColor = Color(0xFF313131)
                 ),
                 title = {
-                    Image(
-                        painter = painterResource(id = R.drawable.sem_t_tulo),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(CircleShape)
-                    )
+
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
-                            tint = Color.White
+                            tint = Color.White,
                         )
                     }
                 },
@@ -89,17 +82,23 @@ fun ProfileScreen(
             )
         },
         content = {
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 80.dp)
+                    .padding(top = 60.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .align(Alignment.TopCenter)
-                ) {
-                    Column {
+                Column {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.sem_t_tulo),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .clip(CircleShape)
+                        )
                         Text(
                             text = "Jonh_Doe", fontSize = 24.sp, color = Color.White
                         )
@@ -121,13 +120,14 @@ fun ProfileScreen(
                 }
                 Column(
                     modifier = Modifier
-                        .padding(top = 120.dp, start = 24.dp, end = 24.dp)
+                        .padding(top = 70.dp, start = 24.dp, end = 24.dp)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+
                         Icon(
-                            imageVector = Icons.Default.Refresh,
+                            painter = painterResource(id = com.example.b_features.R.drawable.ic_book),
                             contentDescription = null,
                             tint = Color.White,
                             modifier = Modifier
@@ -148,9 +148,15 @@ fun ProfileScreen(
                             .padding(end = 220.dp, top = 4.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
-                    CartCompose()
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CartCompose()
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                    ) {
+                        Column {
+                            CartCompose()
+                            CartCompose()
+                        }
+                    }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
@@ -173,6 +179,21 @@ fun ProfileScreen(
                             navController.navigate(NavigationItem.SignInScreen.route)
                         }
                     })
+                Text(
+                    text = "Log out",
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.width(100.dp))
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(60.dp)
+                        .background(color = Color.White, shape = CircleShape)
+                ) {
+                    Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
+                }
             }
         }
     )

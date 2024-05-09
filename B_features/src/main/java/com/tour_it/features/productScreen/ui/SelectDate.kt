@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,6 +16,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,8 +31,9 @@ import androidx.compose.ui.unit.sp
 fun SelectDate(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .padding(12.dp)
+            .fillMaxWidth()
+            .background(Color.White, shape = RoundedCornerShape(8.dp)),
+        contentAlignment = Alignment.Center
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -42,24 +45,20 @@ fun SelectDate(modifier: Modifier = Modifier) {
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange, contentDescription = null,
-                    modifier = Modifier
-                        .padding(8.dp)
+                    modifier = Modifier.padding(4.dp)
                 )
                 TextField(
                     value = "12/05", onValueChange = {},
                     modifier = Modifier
-                        .size(width = 80.dp, height = 24.dp)
-                        .background(color = Color(0xFFD2D2D2)),
-                    textStyle = TextStyle(fontSize = 50.sp)
-
+                        .size(width = 110.dp, height = 50.dp),
+                    textStyle = TextStyle(fontSize = 16.sp),
                 )
             }
             Divider(
                 color = Color.Black,
                 modifier = Modifier
-                    .padding(12.dp)
-                    .height(16.dp)
-                    .width(1.dp)
+                    .padding(20.dp)
+                    .size(width = 1.dp, height = 28.dp)
             )
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -67,13 +66,14 @@ fun SelectDate(modifier: Modifier = Modifier) {
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange, contentDescription = null,
-                    modifier = Modifier
-                        .padding(end = 8.dp)
+                    modifier = Modifier.padding(end = 4.dp)
                 )
                 TextField(
                     value = "20/05", onValueChange = {},
                     modifier = Modifier
-                        .size(width = 80.dp, height = 24.dp)
+                        .size(width = 110.dp, height = 50.dp)
+                        .background(color = Color.Green),
+                    textStyle = TextStyle(fontSize = 16.sp)
                 )
             }
         }

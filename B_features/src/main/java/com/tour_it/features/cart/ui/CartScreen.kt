@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -31,6 +34,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -90,7 +94,7 @@ fun CartScreen(
         content = {
             Column(
                 modifier = Modifier
-                    .padding(top = 80.dp)
+                    .padding(top = 100.dp)
                     .padding(horizontal = 16.dp)
             ) {
 
@@ -106,11 +110,11 @@ fun CartScreen(
                             contentDescription = null,
                             tint = Color.White,
                             modifier = Modifier
-                                .size(24.dp)
+                                .size(26.dp)
                         )
                         Text(
                             text = "Cart",
-                            fontSize = 24.sp,
+                            fontSize = 26.sp,
                             color = Color.White
                         )
                     }
@@ -133,20 +137,26 @@ fun CartScreen(
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(8.dp))
                 Divider(
                     thickness = 4.dp,
-                    color = Color.White,
+                    color = Color(0xFFB5B5B5),
                     modifier = Modifier
                         .padding(end = 270.dp, top = 4.dp)
                 )
                 Spacer(modifier = Modifier.height(28.dp))
-                CartCompose()
-                Spacer(modifier = Modifier.height(8.dp))
-                CartCompose()
-                Spacer(modifier = Modifier.height(8.dp))
-                CartCompose()
-                Spacer(modifier = Modifier.height(40.dp))
+                Box(modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                ){
+                    Column {
+                        CartCompose()
+                        CartCompose()
+                        CartCompose()
+                    }
+                }
 
+
+                Spacer(modifier = Modifier.height(40.dp))
                 Row {
                     Column {
                         Text(text = "Promo code", fontSize = 12.sp, color = Color.White)
@@ -177,11 +187,11 @@ fun CartScreen(
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                imageVector = Icons.Default.Star,
+                                painter = painterResource(id = R.drawable.coins),
                                 contentDescription = null,
-                                tint = Color.White
+                                tint = Color.White,
                             )
-                            Spacer(modifier = Modifier.width(4.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "25 Points",
                                 color = Color.White,
