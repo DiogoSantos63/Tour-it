@@ -14,7 +14,6 @@ import kotlinx.coroutines.tasks.await
 
 class AccountServiceImpl() : AccountService {
 
-    var userName = MutableStateFlow("")
     override val currentUser: Flow<User?>
         get() = callbackFlow {
             val listener = FirebaseAuth.AuthStateListener { auth ->
@@ -51,7 +50,6 @@ class AccountServiceImpl() : AccountService {
                         }
                     }
                 } else {
-                    // Se a criação da conta falhar, lidar com a falha
                     println("Falha ao criar a conta: ${task.exception?.message}")
                 }
             }

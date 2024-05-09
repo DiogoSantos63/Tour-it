@@ -1,5 +1,7 @@
 package com.tour_it.datas.map.repos.restaurant
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.tour_it.datas.map.usecases.toRestaurant
 import com.tour_it.datas.map.usecases.toRestaurantEntity
 import com.tour_it.producer.models.products.Restaurant
@@ -18,6 +20,7 @@ class RestaurantRepositoryImpl(
        dao.deleteAllRestaurants()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getRestaurants(): Flow<List<Restaurant>> {
        return dao.getAllRestaurants().map { restaurant ->
             restaurant.map { it.toRestaurant() }

@@ -29,7 +29,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.b_features.R
+import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.producer.components.GAProfileCircle
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -38,9 +40,8 @@ fun ProductScreen(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
-
-   val productName: String = "Teste"
-   val valueProdut: String = "20"
+    val viewModel = koinViewModel<ProductViewModel>()
+    val product = viewModel.selectedProduct.value
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -88,7 +89,7 @@ fun ProductScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = productName,
+                            text = "teste",
                             fontSize = 24.sp,
                             color = Color.White
                         )
@@ -105,7 +106,7 @@ fun ProductScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = valueProdut,
+                                text = "teste",
                                 fontSize = 16.sp,
                                 color = Color.White
                             )

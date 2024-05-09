@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,6 +54,7 @@ fun ProfileScreen(
     backStackEntry: NavBackStackEntry
 ) {
     val viewModel: AuthenticationViewModel = getViewModel()
+    val userName = viewModel.userName.collectAsState()
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -100,7 +102,9 @@ fun ProfileScreen(
                                 .clip(CircleShape)
                         )
                         Text(
-                            text = "Jonh_Doe", fontSize = 24.sp, color = Color.White
+                            text = userName.value,
+                            fontSize = 24.sp,
+                            color = Color.White
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Row(

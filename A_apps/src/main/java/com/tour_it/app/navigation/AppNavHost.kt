@@ -10,6 +10,8 @@ import com.tour_it.features.authentication.navigation.authentication
 import com.tour_it.features.cart.navigation.cart
 import com.tour_it.features.homepage.navigation.homePage
 import com.tour_it.features.map.navigation.map
+import com.tour_it.features.pointsScreen.navigation.points
+import com.tour_it.features.productScreen.navigation.product
 import com.tour_it.features.profile.navigation.profile
 import com.tour_it.features.searchScreen.navigation.search
 import com.tour_it.features.splash.navigation.splash
@@ -22,7 +24,7 @@ fun AppNavHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.Map.route
+        startDestination = NavigationItem.Splash.route
     ){
         splash(navController)
         authentication(navController)
@@ -30,7 +32,8 @@ fun AppNavHost(
         search(navController)
         cart(navController)
         profile(navController)
+        points(navController)
+        product(navController)
         map(navController)
-
     }
 }

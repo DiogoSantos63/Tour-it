@@ -39,18 +39,23 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import com.tour_it.features.pointsScreen.compose.ShowProductPoints
 import com.tour_it.producer.components.GAProfileCircle
-import com.tour_it.producer.components.bottombarnavigation.GABottomBarNavigation
-import com.tour_it.producer.components.bottombarnavigation.items
+import com.tour_it.producer.components.GABottomBarNavigation
+import com.tour_it.producer.lists.items
+import com.tour_it.producer.navigation.NavigationItem
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PointsScreen() {
+fun PointsScreen(
+    navController: NavController,
+    backStackEntry: NavBackStackEntry
+) {
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -71,6 +76,7 @@ fun PointsScreen() {
                 actions = {
                     IconButton(onClick = { /* do something */ }) {
                         GAProfileCircle(
+                            navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -147,7 +153,7 @@ fun PointsScreen() {
         floatingActionButton = {
             FloatingActionButton(
                 shape = CircleShape,
-                onClick = { },
+                onClick = { navController.navigate(NavigationItem.MapScreen.route) },
                 containerColor = Color(0xFFB5B5B5),
                 modifier = Modifier
                     .size(70.dp)
@@ -166,6 +172,7 @@ fun PointsScreen() {
         bottomBar = {
             Surface(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
                 GABottomBarNavigation(
+                    navController = navController,
                     items = items,
                     selectedIndex = 0,
                     onItemSelected = {},
@@ -173,10 +180,4 @@ fun PointsScreen() {
             }
         },
     )
-}
-
-@Preview
-@Composable
-fun PointsScreenPreview() {
-    PointsScreen()
 }

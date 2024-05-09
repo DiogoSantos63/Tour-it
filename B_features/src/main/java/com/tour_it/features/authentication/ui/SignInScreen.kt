@@ -127,6 +127,7 @@ fun SignInScreen(
                     label = "Sign In",
                     size = 40,
                     onClick = {
+                        viewModel.getAccoutUserName()
                         viewModel.onSignInClick { _, _ ->
                             navController.popBackStack(NavigationItem.SignInScreen.route, true)
                             navController.navigate(NavigationItem.HomePageScreen.route)

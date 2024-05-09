@@ -16,7 +16,7 @@ class AuthenticationViewModel(
 
     private val email = MutableStateFlow("")
     private val password = MutableStateFlow("")
-    val userName = MutableStateFlow("")
+    val userName = MutableStateFlow("-")
 
     fun updateEmail(newEmail:String){
         email.value = newEmail.trim()

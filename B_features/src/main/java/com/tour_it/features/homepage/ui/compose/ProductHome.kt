@@ -17,11 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.b_features.R
 
 @Composable
 fun ProductHome(
-    image: Int,
+    image: String,
     productName: String,
     modifier: Modifier = Modifier
 ) {
@@ -31,13 +32,12 @@ fun ProductHome(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = null,
+        AsyncImage(
             modifier = Modifier
                 .size(height = 88.dp, width = 96.dp)
-                .clip(RoundedCornerShape(20))
+                .clip(RoundedCornerShape(20)),
+            model = image,
+            contentDescription = null
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
@@ -46,13 +46,4 @@ fun ProductHome(
         )
 
     }
-}
-
-@Preview
-@Composable
-fun ProductHomePreview() {
-    ProductHome(
-        image = R.drawable.rectangle_18,
-        productName = "O Açude",
-    )
 }

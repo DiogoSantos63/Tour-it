@@ -16,7 +16,7 @@ fun NavGraphBuilder.homePage(navController: NavController){
         composable(
             route = NavigationItem.HomePageScreen.route,
         ){
-           HomePageScreen(/*navController, it*/)
+           HomePageScreen(navController, it)
         }
     }
 }

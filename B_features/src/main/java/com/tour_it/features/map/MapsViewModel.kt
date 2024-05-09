@@ -24,7 +24,7 @@ class MapsViewModel(
     private val eventRepo: EventRepository,
     private val restaurantRepo: RestaurantRepository
 ): ViewModel() {
-    var userLocation = mutableStateOf<LatLng>(LatLng(40.2033, -8.4103))
+    var userLocation = mutableStateOf<LatLng>(LatLng(40.21089814535288, -8.451650936427374))
     var state by mutableStateOf(MapState())
 
     init {

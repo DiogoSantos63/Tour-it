@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,22 +45,38 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import com.example.b_features.R
+import com.tour_it.features.authentication.AuthenticationViewModel
 import com.tour_it.features.homepage.ui.compose.ProductHome
-import com.tour_it.producer.components.bottombarnavigation.GABottomBarNavigation
+import com.tour_it.features.productScreen.ProductViewModel
+import com.tour_it.producer.components.GABottomBarNavigation
 import com.tour_it.producer.components.GAProfileCircle
-import com.tour_it.producer.components.bottombarnavigation.items
+import com.tour_it.producer.lists.items
+import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.navigation.NavigationItem
+import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageScreen(
-    /*    navController: NavController,
-        backStackEntry: NavBackStackEntry*/
+    navController: NavController,
+    backStackEntry: NavBackStackEntry
 ) {
+
+    val viewModel: AuthenticationViewModel = getViewModel()
+    val productVM: ProductViewModel = getViewModel()
+    val userName = viewModel.userName.collectAsState()
+    val mixedProducts by productVM.mixedProductsList.collectAsState()
+
+    LaunchedEffect(Unit) {
+        productVM.getProductsFromDatabase()
+    }
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -78,6 +98,7 @@ fun HomePageScreen(
                 actions = {
                     IconButton(onClick = { /* do something */ }) {
                         GAProfileCircle(
+                            navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -106,7 +127,7 @@ fun HomePageScreen(
                                     append(", ")
                                 }
                                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                    append("user !")
+                                    append(userName.value)
                                 }
                             },
                             fontSize = 24.sp,
@@ -141,7 +162,9 @@ fun HomePageScreen(
                         Spacer(modifier = Modifier.width(150.dp))
 
                         TextButton(
-                            onClick = {},
+                            onClick = {
+                                      navController.navigate(NavigationItem.ProductScreen.route)
+                            },
                             content = {
                                 Text(
                                     "See All",
@@ -153,11 +176,17 @@ fun HomePageScreen(
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     LazyRow {
-                        items(3) {
-                            ProductHome(
-                                image = R.drawable.rectangle_18,
-                                productName = "O Açude",
-                            )
+                        items(mixedProducts) {product ->
+                            when(product){
+                                is Hotel -> ProductHome(
+                                    image = product.image,
+                                    productName = product.name,
+                                )
+                                is Event -> ProductHome(
+                                    image =product.image,
+                                    productName = product.name,
+                                )
+                            }
                         }
                     }
                 }
@@ -184,11 +213,17 @@ fun HomePageScreen(
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     LazyRow {
-                        items(3) {
-                            ProductHome(
-                                image = R.drawable.rectangle_18,
-                                productName = "O Açude",
-                            )
+                        items(mixedProducts) {product ->
+                            when(product){
+                                is Hotel -> ProductHome(
+                                    image = product.image,
+                                    productName = product.name,
+                                )
+                                is Event -> ProductHome(
+                                    image =product.image,
+                                    productName = product.name,
+                                )
+                            }
                         }
                     }
                 }
@@ -198,11 +233,11 @@ fun HomePageScreen(
         floatingActionButton = {
             FloatingActionButton(
                 shape = CircleShape,
-                onClick = { },
+                onClick = { navController.navigate(NavigationItem.MapScreen.route) },
                 containerColor = Color(0xFFB5B5B5),
                 modifier = Modifier
                     .size(70.dp)
-                    .offset(x=0.dp, y=50.dp)
+                    .offset(x = 0.dp, y = 50.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -217,6 +252,7 @@ fun HomePageScreen(
         bottomBar = {
             Surface(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
                 GABottomBarNavigation(
+                    navController = navController,
                     items = items,
                     selectedIndex = 0,
                     onItemSelected = {},
@@ -225,11 +261,3 @@ fun HomePageScreen(
         },
     )
 }
-
-@Preview
-@Composable
-fun HomePageScreenPreview() {
-    HomePageScreen()
-}
-
-
