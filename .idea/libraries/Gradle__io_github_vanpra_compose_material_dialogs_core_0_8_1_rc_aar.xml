@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.vanpra.compose-material-dialogs:core:0.8.1-rc@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0932132c82111052d2f3313ead2b4632/transformed/core-0.8.1-rc-debug/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0932132c82111052d2f3313ead2b4632/transformed/core-0.8.1-rc-debug/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

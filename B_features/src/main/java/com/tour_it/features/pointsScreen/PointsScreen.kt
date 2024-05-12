@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +32,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,10 +47,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.tour_it.features.pointsScreen.compose.ShowProductPoints
+import com.tour_it.features.productScreen.ProductViewModel
+import com.tour_it.features.productScreen.ui.ShowProduct
 import com.tour_it.producer.components.GAProfileCircle
 import com.tour_it.producer.components.GABottomBarNavigation
 import com.tour_it.producer.lists.items
+import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.producer.navigation.NavigationItem
+import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +65,8 @@ fun PointsScreen(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
+    val productVM: ProductViewModel = getViewModel()
+    val mixedProducts by productVM.mixedProductsList.collectAsState()
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -74,7 +85,7 @@ fun PointsScreen(
                 },
                 navigationIcon = {},
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(NavigationItem.ProfileScreen.route) }) {
                         GAProfileCircle(
                             navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
@@ -116,7 +127,7 @@ fun PointsScreen(
                                         fontSize = 30.sp
                                     )
                                 ) {
-                                    append("455")
+                                    append("5")
                                 }
                             },
                             fontSize = 40.sp,
@@ -134,15 +145,22 @@ fun PointsScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                 ) {
-                    items(9) { index ->
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        ) {
-                            ShowProductPoints(
-                                image = com.example.b_features.R.drawable.rectangle_18,
-                                productName = "O Açude",
-                                points = "400"
+                    items(mixedProducts) { product ->
+                        when(product){
+                            is Hotel -> ShowProductPoints(
+                                image = product.image,
+                                productName = product.name,
+                                points = product.userPoints.toString()
+                            )
+                            is Event -> ShowProductPoints(
+                                image = product.image,
+                                productName = product.name,
+                                points = product.userPoints.toString()
+                            )
+                            is Restaurant -> ShowProductPoints(
+                                image = product.image,
+                                productName = product.name,
+                                points = product.userPoints.toString()
                             )
                         }
                     }
@@ -156,12 +174,12 @@ fun PointsScreen(
                 onClick = { navController.navigate(NavigationItem.MapScreen.route) },
                 containerColor = Color(0xFFB5B5B5),
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(90.dp)
                     .offset(x = 0.dp, y = 50.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(60.dp)
+                        .size(75.dp)
                         .background(Color(0xFF313131), shape = CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {

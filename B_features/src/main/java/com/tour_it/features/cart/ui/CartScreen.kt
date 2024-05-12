@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -44,8 +46,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.e_producer.R
+import com.tour_it.features.homepage.ui.compose.ProductHome
+import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.producer.components.GAProfileCircle
+import com.tour_it.producer.lists.items
+import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.producer.navigation.NavigationItem
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +63,8 @@ fun CartScreen(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
+    val viewModel = koinViewModel<ProductViewModel>()
+    val cartProducts = viewModel.cart
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -148,10 +159,13 @@ fun CartScreen(
                 Box(modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                 ){
-                    Column {
-                        CartCompose()
-                        CartCompose()
-                        CartCompose()
+                    LazyRow {
+                        items(cartProducts.value) {product ->
+                            when(product){
+                                is Hotel -> CartComposeHotel(product)
+
+                            }
+                        }
                     }
                 }
 

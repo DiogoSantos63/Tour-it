@@ -41,7 +41,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.e_producer.R
 import com.tour_it.features.authentication.AuthenticationViewModel
-import com.tour_it.features.cart.ui.CartCompose
 import com.tour_it.producer.components.GenericButton
 import com.tour_it.producer.navigation.NavigationItem
 import org.koin.androidx.compose.getViewModel
@@ -157,8 +156,7 @@ fun ProfileScreen(
                             .clip(RoundedCornerShape(8.dp))
                     ) {
                         Column {
-                            CartCompose()
-                            CartCompose()
+
                         }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
@@ -172,7 +170,7 @@ fun ProfileScreen(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .padding(vertical = 50.dp)
-                    .padding(start = 50.dp)
+                    .padding(start = 40.dp, end = 40.dp)
             ) {
                 GenericButton(
                     label = "Log out",

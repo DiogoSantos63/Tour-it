@@ -18,12 +18,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
@@ -31,17 +33,21 @@ import androidx.navigation.NavController
 import com.example.b_features.R
 import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.producer.components.GAProfileCircle
+import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.navigation.NavigationItem
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProductScreen(
+fun ProductScreenEvent(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
     val viewModel = koinViewModel<ProductViewModel>()
-    val product = viewModel.selectedProduct.value
+    val event = viewModel.event
+
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -60,7 +66,7 @@ fun ProductScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
@@ -69,7 +75,7 @@ fun ProductScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(NavigationItem.ProfileScreen.route) }) {
                         GAProfileCircle(
                             navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
@@ -89,7 +95,7 @@ fun ProductScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "teste",
+                            text = event?.name.orEmpty(),
                             fontSize = 24.sp,
                             color = Color.White
                         )

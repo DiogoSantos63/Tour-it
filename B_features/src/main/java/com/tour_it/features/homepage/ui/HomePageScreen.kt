@@ -58,6 +58,7 @@ import com.tour_it.producer.components.GAProfileCircle
 import com.tour_it.producer.lists.items
 import com.tour_it.producer.models.products.Event
 import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.producer.navigation.NavigationItem
 import org.koin.androidx.compose.getViewModel
 
@@ -73,10 +74,6 @@ fun HomePageScreen(
     val productVM: ProductViewModel = getViewModel()
     val userName = viewModel.userName.collectAsState()
     val mixedProducts by productVM.mixedProductsList.collectAsState()
-
-    LaunchedEffect(Unit) {
-        productVM.getProductsFromDatabase()
-    }
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -96,7 +93,7 @@ fun HomePageScreen(
                 },
                 navigationIcon = {},
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(NavigationItem.ProfileScreen.route) }) {
                         GAProfileCircle(
                             navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
@@ -159,15 +156,15 @@ fun HomePageScreen(
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
-                        Spacer(modifier = Modifier.width(150.dp))
-
+                        Spacer(modifier = Modifier.weight(1f))
                         TextButton(
                             onClick = {
-                                      navController.navigate(NavigationItem.ProductScreen.route)
+                                      navController.navigate(NavigationItem.SearchScreen.route)
                             },
                             content = {
                                 Text(
-                                    "See All",
+                                    text = "See All",
+                                    fontWeight = FontWeight.Normal,
                                     fontSize = 16.sp,
                                     color = Color.White
                                 )
@@ -179,10 +176,26 @@ fun HomePageScreen(
                         items(mixedProducts) {product ->
                             when(product){
                                 is Hotel -> ProductHome(
+                                    product = product,
+                                    navController = navController,
+                                    viewModel = productVM,
+                                    productID = product.id,
                                     image = product.image,
                                     productName = product.name,
                                 )
                                 is Event -> ProductHome(
+                                    product = product,
+                                    navController = navController,
+                                    viewModel = productVM,
+                                    productID = product.id,
+                                    image =product.image,
+                                    productName = product.name,
+                                )
+                                is Restaurant -> ProductHome(
+                                    product = product,
+                                    navController = navController,
+                                    viewModel = productVM,
+                                    productID = product.id,
                                     image =product.image,
                                     productName = product.name,
                                 )
@@ -216,10 +229,26 @@ fun HomePageScreen(
                         items(mixedProducts) {product ->
                             when(product){
                                 is Hotel -> ProductHome(
+                                    product = product,
+                                    navController = navController,
+                                    viewModel = productVM,
+                                    productID = product.id,
                                     image = product.image,
                                     productName = product.name,
                                 )
                                 is Event -> ProductHome(
+                                    product = product,
+                                    navController = navController,
+                                    viewModel = productVM,
+                                    productID = product.id,
+                                    image =product.image,
+                                    productName = product.name,
+                                )
+                                is Restaurant -> ProductHome(
+                                    product = product,
+                                    navController = navController,
+                                    viewModel = productVM,
+                                    productID = product.id,
                                     image =product.image,
                                     productName = product.name,
                                 )
@@ -236,16 +265,20 @@ fun HomePageScreen(
                 onClick = { navController.navigate(NavigationItem.MapScreen.route) },
                 containerColor = Color(0xFFB5B5B5),
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(90.dp)
                     .offset(x = 0.dp, y = 50.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(60.dp)
+                        .size(75.dp)
                         .background(Color(0xFF313131), shape = CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(Icons.Default.LocationOn, contentDescription = "Add", tint = Color.White)
+                    Icon(
+                        Icons.Default.LocationOn,
+                        contentDescription = "Add",
+                        tint = Color.White
+                    )
                 }
             }
         },

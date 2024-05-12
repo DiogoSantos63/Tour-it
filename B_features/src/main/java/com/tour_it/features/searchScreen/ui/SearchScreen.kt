@@ -1,6 +1,8 @@
-package com.tour_it.features.searchScreen
+package com.tour_it.features.searchScreen.ui
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,8 +15,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -32,6 +37,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,13 +52,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.b_features.R
+import com.tour_it.features.homepage.ui.compose.ProductHome
+import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.features.productScreen.ui.ShowProduct
 import com.tour_it.producer.components.GABottomBarNavigation
 import com.tour_it.producer.components.GAProfileCircle
 import com.tour_it.producer.lists.items
+import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.producer.navigation.NavigationItem
+import org.koin.androidx.compose.getViewModel
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,6 +76,13 @@ fun SearchScreen(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
+    val productVM: ProductViewModel = getViewModel()
+    val mixedProducts by productVM.mixedProductsList.collectAsState()
+    val dateTimeString = "2024-05-24T23:30"
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
+    val localDateTime = LocalDateTime.parse(dateTimeString, formatter)
+    val pointsValue = localDateTime.toString()
+
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -77,7 +101,7 @@ fun SearchScreen(
                 },
                 navigationIcon = {},
                 actions = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(NavigationItem.ProfileScreen.route) }) {
                         GAProfileCircle(
                             navController = navController,
                             image = com.example.e_producer.R.drawable.sem_t_tulo,
@@ -129,16 +153,25 @@ fun SearchScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                 ) {
-                    items(9) { index ->
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        ) {
-                            ShowProduct(
-                                image = R.drawable.rectangle_18,
-                                productName = "O Açude",
-                                pointsValue = "€€",
-                                price = "4.2"
+                    items(mixedProducts) { product ->
+                        when(product){
+                            is Hotel -> ShowProduct(
+                                image = product.image,
+                                productName = product.name,
+                                pointsValue = product.rating.toString(),
+                                price = product.priceRange.toString()
+                            )
+                            is Event -> ShowProduct(
+                                image = product.image,
+                                productName = product.name,
+                                pointsValue = pointsValue,
+                                price = product.priceRange.toString()
+                            )
+                            is Restaurant -> ShowProduct(
+                                image = product.image,
+                                productName = product.name,
+                                pointsValue = product.rating.toString(),
+                                price = product.priceRange.toString()
                             )
                         }
                     }
@@ -152,12 +185,12 @@ fun SearchScreen(
                 onClick = { navController.navigate(NavigationItem.MapScreen.route) },
                 containerColor = Color(0xFFB5B5B5),
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(90.dp)
                     .offset(x = 0.dp, y = 50.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(60.dp)
+                        .size(75.dp)
                         .background(Color(0xFF313131), shape = CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {

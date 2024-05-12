@@ -19,7 +19,9 @@ sealed class NavigationItem(val route: String){
     object Cart: NavigationItem(Navigation.CART.name)
     object CartScreen: NavigationItem(Navigation.CART_SCREEN.name)
     object Product: NavigationItem(Navigation.PRODUCT.name)
-    object ProductScreen: NavigationItem(Navigation.PRODUCT_SCREEN.name)
+    object ProductScreenHotel: NavigationItem(Navigation.PRODUCT_SCREEN_HOTEL.name)
+    object ProductScreenEvent: NavigationItem(Navigation.PRODUCT_SCREEN_EVENT.name)
+    object ProductScreenRestaurant: NavigationItem(Navigation.PRODUCT_SCREEN_RESTAURANT.name)
     object Profile: NavigationItem(Navigation.PROFILE.name)
     object ProfileScreen: NavigationItem(Navigation.PROFILE_SCREEN.name)
 }

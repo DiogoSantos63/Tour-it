@@ -29,6 +29,7 @@ fun Restaurant.toRestaurantEntity(): RestaurantEntity {
 @RequiresApi(Build.VERSION_CODES.O)
 fun RestaurantEntity.toRestaurant(): Restaurant {
     return Restaurant(
+        id = restaurantId.toString(),
         name = name,
         cuisine = cuisine,
         location = location,
@@ -49,19 +50,22 @@ fun Event.toEventEntity(): EventEntity {
         dateTime = dateTime,
         image = image,
         price = price,
-        userPoints = userPoints
+        userPoints = userPoints,
+        priceRange = priceRange
     )
 }
 
 fun EventEntity.toEvent(): Event {
     return Event(
+        id = eventId.toString(),
         name = name,
         type = type,
         location = location,
         dateTime = dateTime,
         image = image,
         price = price,
-        userPoints = userPoints
+        userPoints = userPoints,
+        priceRange = priceRange
     )
 }
 
@@ -72,17 +76,20 @@ fun Hotel.toHotelEntity(): HotelEntity {
         rating = rating,
         image = image,
         pricePerNight = pricePerNight,
-        userPoints = userPoints
+        userPoints = userPoints,
+        priceRange = priceRange
     )
 }
 
 fun HotelEntity.toHotel(): Hotel {
     return Hotel(
+        id = hotelId.toString(),
         name = name,
         location = location,
         rating = rating,
         image = image,
         pricePerNight = pricePerNight,
-        userPoints = userPoints
+        userPoints = userPoints,
+        priceRange = priceRange
     )
 }

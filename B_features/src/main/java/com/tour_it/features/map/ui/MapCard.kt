@@ -203,7 +203,7 @@ fun MapCard(
                     Text(
                         modifier = Modifier
                             .clickable {
-                                productViewModel.selectedProduct.value = title
+
                             }
                             .padding(4.dp),
                         style = textStyle,

@@ -32,9 +32,11 @@ class MockData(
                     "Portugal"
                 ),
                 rating = 4.0,
-                image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5EIFf3DnerreCBSDs47tYOZtoSKbU7qqCdRRSNtDHZ9lujdlrFbpSADgHZM498ajQ4FM&usqp=CAU",
+                image = "https://images.trvl-media.com/lodging/1000000/20000/13700/13659/f2dcf2d7.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
                 pricePerNight = 70.0,
-                userPoints = 50
+                userPoints = 50,
+                priceRange = PriceRange.CHEAP,
+                id = "0",
             )
         )
         database.hotelDao().deleteAllHotels()
@@ -61,7 +63,9 @@ class MockData(
                 dateTime = LocalDateTime.of(2024, 5, 24, 23, 30).toString(),
                 image = "https://images.impresa.pt/expresso/2023-04-27-281341664_2246515882164408_1294832501802301189_n.jpg-e74db27b",
                 price = 70.0,
-                userPoints = 25
+                userPoints = 25,
+                priceRange = PriceRange.CHEAP,
+                id = "0",
             )
         )
         database.eventDao().deleteAllEvents()
@@ -74,7 +78,7 @@ class MockData(
     suspend fun insertRestaurants(){
         val restaurants = listOf(
             Restaurant(
-                name = "Praxis",
+                name = "Restaurante Praxis",
                 cuisine = "Bar, Europeia, Portuguesa",
                 location = Location(
                     40.202121618204146,
@@ -90,7 +94,8 @@ class MockData(
                 priceRange = PriceRange.MODERATE,
                 openingTime = LocalTime.now().minusHours(12),
                 closingTime = LocalTime.now().minusHours(1),
-                userPoints = 10
+                userPoints = 10,
+                id = "0",
             )
         )
         database.restaurantDao().deleteAllRestaurants()

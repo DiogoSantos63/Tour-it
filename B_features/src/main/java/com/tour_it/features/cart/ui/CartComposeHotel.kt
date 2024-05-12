@@ -19,10 +19,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.b_features.R
+import com.tour_it.features.productScreen.ProductViewModel
+import com.tour_it.producer.models.products.Hotel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CartCompose(modifier: Modifier = Modifier) {
+fun CartComposeHotel(
+    hotel: Hotel,
+    ) {
+    val viewModel = koinViewModel<ProductViewModel>()
 
     Box(
         modifier = Modifier
@@ -33,8 +40,8 @@ fun CartCompose(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 24.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.hotel_vila_),
+            AsyncImage(
+                model = hotel.image,
                 contentDescription = null,
                 modifier = Modifier
                     .size(width = 84.dp, height = 74.dp)
@@ -45,26 +52,19 @@ fun CartCompose(modifier: Modifier = Modifier) {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Hotel Vila Galé",
+                    text = hotel.name,
                     fontWeight = FontWeight.Bold,
                 )
-                Text(text = "R. Abel Dias Urbano")
-                Text(text = "12-05 to 13-05")
+                Text(text = hotel.location.street)
+                Text(text = "${viewModel.selectedStartDate} to ${viewModel.selectedEndDate}")
             }
 
             Spacer(modifier = Modifier.width(28.dp))
 
             Text(
-                text = "120€",
+                text = "${hotel.pricePerNight}",
                 fontWeight = FontWeight.Bold,
             )
 
         }}
-
-}
-
-@Preview
-@Composable
-fun CartComposePreview() {
-    CartCompose()
 }

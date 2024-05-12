@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,14 +18,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.b_features.R
 
 @Composable
 fun ShowProductPoints(
-    image: Int,
+    image: String,
     productName: String,
     points: String,
     modifier: Modifier = Modifier
@@ -36,14 +41,19 @@ fun ShowProductPoints(
     ) {
         Text(
             text = productName,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             color = Color.White
         )
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = null,
+        AsyncImage(
             modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(20))
+                .height(130.dp)
+                .padding(vertical = 8.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(10)),
+            model = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -62,18 +72,5 @@ fun ShowProductPoints(
                     .size(10.dp)
             )
         }
-
     }
-
-
-}
-
-@Preview
-@Composable
-fun ShowProductPointsPreview() {
-    ShowProductPoints(
-        image = R.drawable.rectangle_18,
-        productName = "O Açude",
-        points = "400"
-    )
 }

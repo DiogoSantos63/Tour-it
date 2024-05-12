@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.tour_it.features.searchScreen.SearchScreen
+import com.tour_it.features.searchScreen.ui.SearchScreen
 import com.tour_it.producer.navigation.NavigationItem
 
 fun NavGraphBuilder.search(navController: NavController){

@@ -4,6 +4,7 @@ import com.tour_it.producer.enums.PriceRange
 import java.time.LocalTime
 
 data class Restaurant(
+    val id: String,
     val name: String,
     val cuisine: String,
     val location: Location,
