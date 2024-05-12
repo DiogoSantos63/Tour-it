@@ -159,19 +159,25 @@ fun SearchScreen(
                                 image = product.image,
                                 productName = product.name,
                                 pointsValue = product.rating.toString(),
-                                price = product.priceRange.toString()
+                                price = product.priceRange.toString(),
+                                product = product,
+                                navController = navController
                             )
                             is Event -> ShowProduct(
                                 image = product.image,
                                 productName = product.name,
                                 pointsValue = pointsValue,
-                                price = product.priceRange.toString()
+                                price = product.priceRange.toString(),
+                                product = product,
+                                navController = navController
                             )
                             is Restaurant -> ShowProduct(
                                 image = product.image,
                                 productName = product.name,
                                 pointsValue = product.rating.toString(),
-                                price = product.priceRange.toString()
+                                price = product.priceRange.toString(),
+                                product = product,
+                                navController = navController
                             )
                         }
                     }

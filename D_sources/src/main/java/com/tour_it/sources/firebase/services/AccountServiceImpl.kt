@@ -14,10 +14,10 @@ import kotlinx.coroutines.tasks.await
 
 class AccountServiceImpl() : AccountService {
 
-    override val currentUser: Flow<User?>
+    override val currentUser: Flow<User>
         get() = callbackFlow {
             val listener = FirebaseAuth.AuthStateListener { auth ->
-                this.trySend(auth.currentUser?.let { User(it.uid, it.displayName ?: "User") })
+                auth.currentUser?.let { User(it.uid, it.displayName.toString()) }?.let { this.trySend(it) }
             }
             Firebase.auth.addAuthStateListener(listener)
             awaitClose { Firebase.auth.removeAuthStateListener(listener) }

@@ -70,7 +70,7 @@ fun SignInScreen(
                 Text(
                     modifier = Modifier
                         .padding(10.dp),
-                    text = "Username",
+                    text = "Email",
                     color = Color.White
                 )
                 TextField(

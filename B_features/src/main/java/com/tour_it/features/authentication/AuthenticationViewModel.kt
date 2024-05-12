@@ -16,7 +16,11 @@ class AuthenticationViewModel(
 
     private val email = MutableStateFlow("")
     private val password = MutableStateFlow("")
-    val userName = MutableStateFlow("-")
+    val userName = MutableStateFlow("user")
+
+    init {
+        getAccoutUserName()
+    }
 
     fun updateEmail(newEmail:String){
         email.value = newEmail.trim()
@@ -45,7 +49,7 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             runCatching {
                 accountService.currentUser.collect{ user ->
-                    userName.value = user?.userName ?: "User"
+                    userName.value = user.userName
                 }
             }
         }

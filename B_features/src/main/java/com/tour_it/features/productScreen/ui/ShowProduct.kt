@@ -1,6 +1,7 @@
 package com.tour_it.features.productScreen.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,19 +23,45 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.b_features.R
+import com.tour_it.features.productScreen.ProductViewModel
+import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.models.products.Hotel
+import com.tour_it.producer.models.products.Restaurant
+import com.tour_it.producer.navigation.NavigationItem
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ShowProduct(
+    product: Any,
+    navController: NavController,
     image: String,
     productName: String,
     pointsValue: String,
     price: String,
     modifier: Modifier = Modifier
 ) {
+    val viewModel: ProductViewModel = getViewModel()
     Column(
         modifier = modifier
+            .clickable {
+                when(product){
+                    is Hotel ->  {
+                        navController.navigate(NavigationItem.ProductScreenHotel.route)
+                        viewModel.hotel = product
+                    }
+                    is Event -> {
+                        navController.navigate(NavigationItem.ProductScreenEvent.route)
+                        viewModel.event = product
+                    }
+                    is Restaurant -> {
+                        navController.navigate(NavigationItem.ProductScreenRestaurant.route)
+                        viewModel.restaurant = product
+                    }
+                }
+            }
             .padding(8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,7 +65,7 @@ fun CartScreen(
     backStackEntry: NavBackStackEntry
 ) {
     val viewModel = koinViewModel<ProductViewModel>()
-    val cartProducts = viewModel.cart
+    val cartProducts = viewModel.cartHotels.collectAsState()
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -163,7 +164,6 @@ fun CartScreen(
                         items(cartProducts.value) {product ->
                             when(product){
                                 is Hotel -> CartComposeHotel(product)
-
                             }
                         }
                     }

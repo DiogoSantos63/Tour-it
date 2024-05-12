@@ -72,7 +72,7 @@ fun HomePageScreen(
 
     val viewModel: AuthenticationViewModel = getViewModel()
     val productVM: ProductViewModel = getViewModel()
-    val userName = viewModel.userName.collectAsState()
+    val userName = viewModel.userName.collectAsState().value
     val mixedProducts by productVM.mixedProductsList.collectAsState()
 
     Scaffold(
@@ -124,7 +124,7 @@ fun HomePageScreen(
                                     append(", ")
                                 }
                                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                    append(userName.value)
+                                    append(userName)
                                 }
                             },
                             fontSize = 24.sp,

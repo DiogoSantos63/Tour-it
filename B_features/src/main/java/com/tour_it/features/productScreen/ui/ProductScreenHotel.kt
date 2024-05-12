@@ -131,78 +131,78 @@ fun ProductScreenHotel(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Divider(
-                        thickness = 4.dp,
-                        color = Color.White,
-                        modifier = Modifier.padding(end = 240.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.height(60.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ) {
-                    AsyncImage(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        model = hotel?.image.orEmpty(),
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = hotel?.location?.street.orEmpty(),
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        modifier = Modifier
-                            .padding(end = 200.dp, top = 8.dp)
-                    )
-
-                    Text(
-                        text = "${hotel?.pricePerNight} € per night",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        modifier = Modifier
-                            .padding(end = 200.dp, top = 8.dp)
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    Column {
-                        Text(
-                            text = "Select date",
-                            fontSize = 24.sp,
-                            color = Color.White
-                        )
-                        Divider(
                             thickness = 4.dp,
                             color = Color.White,
-                            modifier = Modifier.width(120.dp)
+                            modifier = Modifier.padding(end = 240.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.height(50.dp))
+                    Spacer(modifier = Modifier.height(60.dp))
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
-                            .clip(RoundedCornerShape(20)),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        SelectDate(modifier = Modifier)
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            model = hotel?.image.orEmpty(),
+                            contentDescription = null,
+                        )
+                        Text(
+                            text = hotel?.location?.street.orEmpty(),
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            modifier = Modifier
+                                .padding(end = 200.dp, top = 8.dp)
+                        )
+
+                        Text(
+                            text = "${hotel?.pricePerNight} € per night",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            modifier = Modifier
+                                .padding(end = 200.dp, top = 8.dp)
+                        )
+                        Spacer(modifier = Modifier.height(30.dp))
+                        Column {
+                            Text(
+                                text = "Select date",
+                                fontSize = 24.sp,
+                                color = Color.White
+                            )
+                            Divider(
+                                thickness = 4.dp,
+                                color = Color.White,
+                                modifier = Modifier.width(120.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(50.dp))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .clip(RoundedCornerShape(20)),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            SelectDate(modifier = Modifier)
+                        }
+                    }
+                }
+            },
+            bottomBar = {
+                Row(
+                 modifier = Modifier
+                     .padding(horizontal = 8.dp)
+                ) {
+                    GenericButton(label = "Add to cart", size = 30) {
+                        viewModel.calculateDays()
+                        if (hotel != null) {
+                            viewModel.addHotelToCart(product = hotel)
+                            navController.navigate(NavigationItem.CartScreen.route)
+                        }
                     }
                 }
             }
-        },
-        bottomBar = {
-            Row(
-             modifier = Modifier
-                 .padding(horizontal = 8.dp)
-            ) {
-                GenericButton(label = "Add to cart", size = 30) {
-                    viewModel.calculateDays()
-                    if (hotel != null) {
-                        viewModel.addProductToCart(product = hotel)
-                        navController.navigate(NavigationItem.CartScreen.route)
-                    }
-                }
-            }
-        }
-    )
-}
+        )
+    }

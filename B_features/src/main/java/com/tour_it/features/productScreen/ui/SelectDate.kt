@@ -135,7 +135,7 @@ fun SelectDate(modifier: Modifier = Modifier) {
                             initialDate = LocalDate.now(),
                             title = "End date",
                             allowedDateValidator = {
-                                !it.isBefore(LocalDate.now())
+                                !it.isBefore(startDate)
                             }
                         ){
                             endDate = it

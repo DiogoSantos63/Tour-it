@@ -148,16 +148,22 @@ fun PointsScreen(
                     items(mixedProducts) { product ->
                         when(product){
                             is Hotel -> ShowProductPoints(
+                                navController = navController,
+                                product = product,
                                 image = product.image,
                                 productName = product.name,
                                 points = product.userPoints.toString()
                             )
                             is Event -> ShowProductPoints(
+                                navController = navController,
+                                product = product,
                                 image = product.image,
                                 productName = product.name,
                                 points = product.userPoints.toString()
                             )
                             is Restaurant -> ShowProductPoints(
+                                navController = navController,
+                                product = product,
                                 image = product.image,
                                 productName = product.name,
                                 points = product.userPoints.toString()

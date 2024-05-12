@@ -14,6 +14,7 @@ import com.tour_it.producer.models.products.Hotel
 import com.tour_it.producer.models.products.Restaurant
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -30,9 +31,9 @@ class ProductViewModel(
     private val _selectedStartDate = MutableStateFlow(LocalDate.now())
     private val _selectedEndDate = MutableStateFlow(LocalDate.now())
     private val _days = MutableStateFlow(0)
-    private val _cart = MutableStateFlow<List<Any>>(emptyList())
+    private val _cartHotels = MutableStateFlow<List<Hotel>>(listOf())
     val mixedProductsList: StateFlow<List<Any>> get() = _mixedProductsList
-    val cart: StateFlow<List<Any>> get() = _cart
+    val cartHotels = _cartHotels.asStateFlow()
     val selectedStartDate = _selectedStartDate
     val selectedEndDate = _selectedEndDate
 
@@ -81,7 +82,14 @@ class ProductViewModel(
 
         _days.value = days.toInt()
     }
-    fun addProductToCart(product: Any){
-        _cart.value = _cart.value + product
+    fun addHotelToCart(product: Hotel){
+
     }
+    fun addEventToCart(product: Event){
+
+    }
+    fun addRestaurantToCart(product: Restaurant){
+
+    }
+
 }

@@ -1,13 +1,17 @@
 package com.tour_it.features.productScreen.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
@@ -23,19 +27,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.b_features.R
 import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.producer.components.GAProfileCircle
-import com.tour_it.producer.models.products.Event
+import com.tour_it.producer.components.GenericButton
 import com.tour_it.producer.models.products.Hotel
-import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.producer.navigation.NavigationItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -48,12 +54,13 @@ fun ProductScreenRestaurant(
 ) {
     val viewModel = koinViewModel<ProductViewModel>()
     val restaurant = viewModel.restaurant
+
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFF313131) //Add your own color here, just to clarify.
+                    containerColor = Color(0xFF313131)
                 ),
                 title = {
                     Image(
@@ -94,16 +101,21 @@ fun ProductScreenRestaurant(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
+                            modifier = Modifier.weight(1f),
                             text = restaurant?.name.orEmpty(),
+                            maxLines = 1,
+                            overflow = TextOverflow.Clip,
                             fontSize = 24.sp,
                             color = Color.White
                         )
-                        Spacer(modifier = Modifier.width(140.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         Row(
+                            modifier = Modifier
+                                .padding(end = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Star,
+                                imageVector = Icons.Default.DateRange,
                                 contentDescription = null,
                                 tint = Color.White,
                                 modifier = Modifier
@@ -111,7 +123,7 @@ fun ProductScreenRestaurant(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "teste",
+                                text = restaurant?.cuisine.orEmpty(),
                                 fontSize = 16.sp,
                                 color = Color.White
                             )
@@ -128,15 +140,17 @@ fun ProductScreenRestaurant(
                 Spacer(modifier = Modifier.height(60.dp))
                 Column(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .padding(8.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.hotel_vila_),
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        model = restaurant?.image.orEmpty(),
                         contentDescription = null,
-
-                        )
+                    )
                     Text(
-                        text = "R. Abel Dias Urbano, Coimbra",
+                        text = restaurant?.location?.street.orEmpty(),
                         color = Color.White,
                         fontSize = 16.sp,
                         modifier = Modifier
@@ -144,61 +158,28 @@ fun ProductScreenRestaurant(
                     )
 
                     Text(
-                        text = "120 € per night",
+                        text = "${restaurant?.priceRange.toString()} €",
                         color = Color.White,
                         fontSize = 16.sp,
                         modifier = Modifier
                             .padding(end = 200.dp, top = 8.dp)
                     )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    Column {
-                        Text(
-                            text = "Select date",
-                            fontSize = 24.sp,
-                            color = Color.White
-                        )
-                        Divider(
-                            thickness = 4.dp,
-                            color = Color.White,
-                            modifier = Modifier.width(120.dp)
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(50.dp))
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        SelectDate(modifier = Modifier.fillMaxWidth())
-
-                    }
                 }
             }
         },
         bottomBar = {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .padding(vertical = 24.dp)
-                    .padding(start = 50.dp)
+                    .padding(horizontal = 8.dp)
             ) {
-                Text(
-                    text = "Add to Cart",
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.width(40.dp))
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(60.dp)
-                        .background(color = Color.White, shape = CircleShape)
-                ) {
-                    Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
+                GenericButton(label = "Add to cart", size = 30) {
+                    viewModel.calculateDays()
+                    if (restaurant != null) {
+                        viewModel.addRestaurantToCart(product = restaurant)
+                        navController.navigate(NavigationItem.CartScreen.route)
+                    }
                 }
             }
-
         }
     )
 }
