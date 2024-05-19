@@ -175,7 +175,7 @@ fun ProductScreenEvent(
                 GenericButton(label = "Add to cart", size = 30) {
                     viewModel.calculateDays()
                     if (event != null) {
-                        viewModel.addEventToCart(product = event)
+                        viewModel.addEventToCart(event = event)
                         navController.navigate(NavigationItem.CartScreen.route)
                     }
                 }

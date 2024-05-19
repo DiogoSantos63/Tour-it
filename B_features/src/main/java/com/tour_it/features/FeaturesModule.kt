@@ -1,5 +1,6 @@
 package com.tour_it.features
 
+import android.content.Context
 import androidx.room.Room
 import com.tour_it.datas.datasModule
 import com.tour_it.datas.map.repos.event.EventRepository
@@ -30,3 +31,4 @@ val featureModule: Module = module{
     )
     viewModel { MainViewModel(get(), get()) }
 }
+

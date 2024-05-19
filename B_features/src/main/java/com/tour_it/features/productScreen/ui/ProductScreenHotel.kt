@@ -198,7 +198,7 @@ fun ProductScreenHotel(
                     GenericButton(label = "Add to cart", size = 30) {
                         viewModel.calculateDays()
                         if (hotel != null) {
-                            viewModel.addHotelToCart(product = hotel)
+                            viewModel.addHotelToCart(hotel = hotel)
                             navController.navigate(NavigationItem.CartScreen.route)
                         }
                     }

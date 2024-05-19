@@ -175,7 +175,7 @@ fun ProductScreenRestaurant(
                 GenericButton(label = "Add to cart", size = 30) {
                     viewModel.calculateDays()
                     if (restaurant != null) {
-                        viewModel.addRestaurantToCart(product = restaurant)
+                        viewModel.addRestaurantToCart(restaurant = restaurant)
                         navController.navigate(NavigationItem.CartScreen.route)
                     }
                 }

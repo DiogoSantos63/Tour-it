@@ -61,6 +61,7 @@ import com.tour_it.producer.models.products.Hotel
 import com.tour_it.producer.models.products.Restaurant
 import com.tour_it.producer.navigation.NavigationItem
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +72,7 @@ fun HomePageScreen(
 ) {
 
     val viewModel: AuthenticationViewModel = getViewModel()
-    val productVM: ProductViewModel = getViewModel()
+    val productVM: ProductViewModel = koinViewModel()
     val userName = viewModel.userName.collectAsState().value
     val mixedProducts by productVM.mixedProductsList.collectAsState()
 
@@ -277,7 +278,7 @@ fun HomePageScreen(
                     Icon(
                         Icons.Default.LocationOn,
                         contentDescription = "Add",
-                        tint = Color.White
+                        tint =  Color(0xFFFF9000)
                     )
                 }
             }

@@ -67,6 +67,8 @@ fun PointsScreen(
 ) {
     val productVM: ProductViewModel = getViewModel()
     val mixedProducts by productVM.mixedProductsList.collectAsState()
+    val userPoints = productVM.updateUserPoints()
+
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -127,7 +129,7 @@ fun PointsScreen(
                                         fontSize = 30.sp
                                     )
                                 ) {
-                                    append("5")
+                                    append("$userPoints")
                                 }
                             },
                             fontSize = 40.sp,
@@ -189,7 +191,7 @@ fun PointsScreen(
                         .background(Color(0xFF313131), shape = CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(Icons.Default.LocationOn, contentDescription = "Add", tint = Color.White)
+                    Icon(Icons.Default.LocationOn, contentDescription = "Add", tint =  Color(0xFFFF9000))
                 }
             }
         },

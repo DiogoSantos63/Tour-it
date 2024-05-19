@@ -35,6 +35,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,8 +65,11 @@ fun CartScreen(
     navController: NavController,
     backStackEntry: NavBackStackEntry
 ) {
-    val viewModel = koinViewModel<ProductViewModel>()
-    val cartProducts = viewModel.cartHotels.collectAsState()
+    val viewModel: ProductViewModel = koinViewModel()
+    val cartProducts by viewModel.mixedCartProductsList.collectAsState()
+    val cartTotal = viewModel.calculateCartProduct(cartProducts)
+    val points = viewModel.calculatePointsProduct(cartProducts)
+
     Scaffold(
         containerColor = Color(0xFF313131),
         topBar = {
@@ -109,7 +113,6 @@ fun CartScreen(
                     .padding(top = 100.dp)
                     .padding(horizontal = 16.dp)
             ) {
-
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -143,7 +146,7 @@ fun CartScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "205€",
+                            text = "$cartTotal €",
                             fontSize = 24.sp,
                             color = Color.White
                         )
@@ -157,19 +160,19 @@ fun CartScreen(
                         .padding(end = 270.dp, top = 4.dp)
                 )
                 Spacer(modifier = Modifier.height(28.dp))
-                Box(modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                ){
-                    LazyRow {
-                        items(cartProducts.value) {product ->
-                            when(product){
+                Row {
+                    LazyRow(
+                        modifier = Modifier
+                            .height(140.dp),
+                    ) {
+                        items(cartProducts) { product ->
+                            when (product) {
                                 is Hotel -> CartComposeHotel(product)
+
                             }
                         }
                     }
                 }
-
-
                 Spacer(modifier = Modifier.height(40.dp))
                 Row {
                     Column {
@@ -187,7 +190,6 @@ fun CartScreen(
                                 modifier = Modifier
                                     .size(width = 154.dp, height = 24.dp)
                             )
-
                         }
                     }
                     Spacer(modifier = Modifier.width(40.dp))
@@ -207,7 +209,7 @@ fun CartScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "25 Points",
+                                text = "$points Points",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 24.sp
@@ -224,7 +226,6 @@ fun CartScreen(
                         .fillMaxWidth()
                 )
             }
-
         },
         bottomBar = {
             Row(
@@ -250,7 +251,6 @@ fun CartScreen(
                     Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null)
                 }
             }
-
         }
     )
 }

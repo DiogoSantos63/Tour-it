@@ -5,5 +5,5 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val featureProductModule: Module = module{
-    viewModel {ProductViewModel(get(), get(), get())}
+    viewModel {ProductViewModel(get(), get(), get() , get(), get())}
 }

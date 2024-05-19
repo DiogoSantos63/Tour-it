@@ -6,12 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.tour_it.producer.enums.Navigation
 import com.tour_it.producer.interfaces.AccountService
 import com.tour_it.producer.models.User
+import com.tour_it.sources.room.databases.TourItDB
+import com.tour_it.sources.room.entities.UserEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 const val TAG = "AuthenticationViewModel"
 class AuthenticationViewModel(
-    private val accountService: AccountService
+    private val accountService: AccountService,
+    private val db: TourItDB
 ): ViewModel() {
 
     private val email = MutableStateFlow("")
@@ -69,6 +72,10 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             runCatching {
                 accountService.signUp(email.value, password.value, userName.value)
+                val newUser = UserEntity(
+                    name = userName.value,
+                )
+                db.usersDao().insertUser(newUser)
                 openAndPopUp(Navigation.SIGN_IN.name, Navigation.SIGN_UP.name)
             }.onFailure {
                 Log.e(TAG, "onSignInClick: ", it)
