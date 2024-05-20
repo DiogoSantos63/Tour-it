@@ -1,13 +1,11 @@
 package com.tour_it.features.cart.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,21 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.b_features.R
 import com.tour_it.features.productScreen.ProductViewModel
-import com.tour_it.producer.models.products.Hotel
 import com.tour_it.sources.room.entities.CartProductsEntity
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CartComposeHotel(
-    hotel: CartProductsEntity,
-    ) {
+fun CartComposeRestaurant(
+    restaurant: CartProductsEntity,
+) {
     val viewModel = koinViewModel<ProductViewModel>()
     val startDate = viewModel.selectedStartDate.collectAsState()
     val endDate = viewModel.selectedEndDate.collectAsState()
@@ -58,7 +51,7 @@ fun CartComposeHotel(
                 .padding(vertical = 12.dp)
         ) {
             AsyncImage(
-                model = hotel.image,
+                model = restaurant.image,
                 contentDescription = null,
                 modifier = Modifier
                     .size(width = 84.dp, height = 74.dp)
@@ -71,17 +64,17 @@ fun CartComposeHotel(
                         .width(200.dp)
                 ) {
                     Text(
-                        text = hotel.name,
+                        text = restaurant.name,
                         color = Color.Black,
                         maxLines = 2,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = hotel.location.street,
+                        text = restaurant.location.street,
                         maxLines = 2
                     )
                     Text(
-                        text = "From ${startDate.value} to ${endDate.value}",
+                        text = "${restaurant.openingTime} - ${restaurant.closingTime}",
                         maxLines = 2
                     )
                 }
@@ -89,11 +82,11 @@ fun CartComposeHotel(
                     horizontalAlignment = Alignment.End,
                 ) {
                     Text(
-                        text = "${hotel.price} €",
+                        text = "${restaurant.cuisine}",
                         fontWeight = FontWeight.Bold,
                     )
                     IconButton(
-                        onClick = { viewModel.removeProductCart(hotel.productId) }
+                        onClick = { viewModel.removeProductCart(restaurant.productId) }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,

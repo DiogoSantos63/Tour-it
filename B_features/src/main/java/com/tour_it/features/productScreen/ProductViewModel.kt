@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import kotlin.time.times
 
@@ -32,30 +34,25 @@ class ProductViewModel(
     private val accountService: AccountService
 ) : ViewModel() {
     private val _mixedProductsList = MutableStateFlow<List<Any>>(emptyList())
-    private val _mixedCartProductsList = MutableStateFlow<List<Any>>(emptyList())
+    private val _mixedCartProductsList = MutableStateFlow<List<CartProductsEntity>>(emptyList())
     private val _selectedStartDate = MutableStateFlow(LocalDate.now())
     private val _selectedEndDate = MutableStateFlow(LocalDate.now())
     private val _days = MutableStateFlow(0)
-    private val _cartHotels = MutableStateFlow<List<Hotel>>(listOf())
-    private val _cartEvents = MutableStateFlow<List<Event>>(listOf())
-    private val _cartRestaurants = MutableStateFlow<List<Restaurant>>(listOf())
-    private val _userPoints = MutableStateFlow<Int>(0)
-    private val _cartTotal = MutableStateFlow(0.0)
     val mixedProductsList: StateFlow<List<Any>> get() = _mixedProductsList
-    val mixedCartProductsList: StateFlow<List<Any>> = _mixedProductsList.asStateFlow()
+    val mixedCartProductsList: StateFlow<List<CartProductsEntity>>get() =  _mixedCartProductsList
+
+
     val selectedStartDate = _selectedStartDate
     val selectedEndDate = _selectedEndDate
     val userName = MutableStateFlow("user")
-    val userPoints = _userPoints.asStateFlow()
-    val cartTotal: StateFlow<Double> = _cartTotal.asStateFlow()
     var hotel: Hotel? = null
     var event: Event? = null
     var restaurant: Restaurant? = null
     init {
         getProductsFromDatabase()
         getAccountUserName()
-        getCartProductsFromDatabase()
         updateUserPoints()
+        getCartProductsFromDatabase()
     }
 
     private fun getAccountUserName() {
@@ -66,6 +63,13 @@ class ProductViewModel(
                 }
             }
         }
+    }
+
+    fun removeProductCart(id: Int){
+        viewModelScope.launch {
+            db.cartProductsDao().deleteProduct(id)
+        }
+        getCartProductsFromDatabase()
     }
 
     fun updateStartDate(date: LocalDate){
@@ -107,41 +111,50 @@ class ProductViewModel(
         }
     }
 
-    fun addHotelToCart(hotel: Hotel){
+    fun addHotelToCart(hotel: Hotel, startDate: LocalDate, endDate: LocalDate){
         viewModelScope.launch {
             val product = CartProductsEntity(
                 name = hotel.name,
                 priceRange = hotel.priceRange,
                 image = hotel.image,
+                openingTime = startDate.toString(),
+                closingTime = endDate.toString(),
                 price = hotel.pricePerNight,
                 userPoints = hotel.userPoints,
                 location = hotel.location,
                 productType = ProductType.HOTEL
             )
             db.cartProductsDao().insertProduct(product)
+            getCartProductsFromDatabase()
         }
     }
 
-    fun calculateCartProduct(products : List<Any>): Double {
-        val daysDifference = ChronoUnit.DAYS.between(selectedStartDate.value, selectedEndDate.value).toDouble()
+    fun calculateCartProduct(products : List<CartProductsEntity>): Double {
         var total = 0.0
 
         products.forEach { product ->
-            when (product) {
-                is Hotel -> total += daysDifference * product.pricePerNight
-                is Event -> total += product.price
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            total += when (product.productType) {
+                ProductType.EVENT -> product.price
+                ProductType.HOTEL -> {
+                    val startDate = LocalDate.parse(product.openingTime, formatter)
+                    val endDate = LocalDate.parse(product.closingTime, formatter)
+                    val daysDifference = ChronoUnit.DAYS.between(startDate, endDate)
+                    daysDifference * product.price
+                }
+                ProductType.RESTAURANT -> product.price
             }
         }
         return total
     }
 
-    fun calculatePointsProduct(products : List<Any>): Int {
+    fun calculatePointsProduct(products : List<CartProductsEntity>): Int {
         var points = 0
         products.forEach { product ->
-            when (product) {
-                is Hotel -> points += product.userPoints
-                is Event -> points += product.userPoints
-                is Restaurant -> points += product.userPoints
+            when (product.productType) {
+                ProductType.EVENT -> points += product.userPoints
+                ProductType.HOTEL ->  points += product.userPoints
+                ProductType.RESTAURANT -> points += product.userPoints
             }
         }
         return points
@@ -160,6 +173,7 @@ class ProductViewModel(
                 dateTime = event.dateTime
             )
             db.cartProductsDao().insertProduct(product)
+            getCartProductsFromDatabase()
         }
     }
     fun addRestaurantToCart(restaurant: Restaurant){
@@ -168,6 +182,7 @@ class ProductViewModel(
                 name = restaurant.name,
                 priceRange = restaurant.priceRange,
                 image = restaurant.image,
+                price = 0.0,
                 userPoints = restaurant.userPoints,
                 location = restaurant.location,
                 productType = ProductType.EVENT,
@@ -175,6 +190,7 @@ class ProductViewModel(
                 closingTime = restaurant.closingTime.toString()
             )
             db.cartProductsDao().insertProduct(product)
+            getCartProductsFromDatabase()
         }
     }
 
@@ -188,7 +204,7 @@ class ProductViewModel(
         _days.value = days.toInt()
     }
 
-    private fun getCartProductsFromDatabase() {
+    fun getCartProductsFromDatabase(){
         viewModelScope.launch {
             val cartProducts = db.cartProductsDao().getProducts()
             _mixedCartProductsList.value = cartProducts

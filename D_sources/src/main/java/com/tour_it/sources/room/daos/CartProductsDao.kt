@@ -17,6 +17,8 @@ interface CartProductsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: CartProductsEntity)
 
+    @Query("DELETE  FROM products WHERE productId =:id")
+    suspend fun deleteProduct(id: Int)
 
     @Query("SELECT * FROM products")
     suspend fun getProducts(): List<CartProductsEntity>

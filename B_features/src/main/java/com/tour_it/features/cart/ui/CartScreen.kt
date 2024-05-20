@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -34,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -51,6 +53,7 @@ import com.example.e_producer.R
 import com.tour_it.features.homepage.ui.compose.ProductHome
 import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.producer.components.GAProfileCircle
+import com.tour_it.producer.enums.ProductType
 import com.tour_it.producer.lists.items
 import com.tour_it.producer.models.products.Event
 import com.tour_it.producer.models.products.Hotel
@@ -69,6 +72,7 @@ fun CartScreen(
     val cartProducts by viewModel.mixedCartProductsList.collectAsState()
     val cartTotal = viewModel.calculateCartProduct(cartProducts)
     val points = viewModel.calculatePointsProduct(cartProducts)
+
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -160,20 +164,18 @@ fun CartScreen(
                         .padding(end = 270.dp, top = 4.dp)
                 )
                 Spacer(modifier = Modifier.height(28.dp))
-                Row {
-                    LazyRow(
+                    LazyColumn(
                         modifier = Modifier
-                            .height(140.dp),
+                            .height(400.dp),
                     ) {
                         items(cartProducts) { product ->
-                            when (product) {
-                                is Hotel -> CartComposeHotel(product)
-
+                            when (product.productType) {
+                                ProductType.HOTEL -> CartComposeHotel(product)
+                                ProductType.EVENT -> CartComposeEvent(product)
+                                ProductType.RESTAURANT -> TODO()
                             }
                         }
                     }
-                }
-                Spacer(modifier = Modifier.height(40.dp))
                 Row {
                     Column {
                         Text(text = "Promo code", fontSize = 12.sp, color = Color.White)

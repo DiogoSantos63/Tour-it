@@ -11,7 +11,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,8 +25,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,7 +48,12 @@ import com.tour_it.producer.components.GAProfileCircle
 import com.tour_it.producer.components.GenericButton
 import com.tour_it.producer.models.products.Hotel
 import com.tour_it.producer.navigation.NavigationItem
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import org.koin.androidx.compose.koinViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -52,6 +63,35 @@ fun ProductScreenHotel(
     backStackEntry: NavBackStackEntry
 ) {
     val viewModel = koinViewModel<ProductViewModel>()
+
+    var startText by remember {
+        mutableStateOf("Start date")
+    }
+    var endText by remember {
+        mutableStateOf("End date")
+    }
+    var startDate by remember {
+        mutableStateOf(LocalDate.now())
+    }
+    var endDate by remember {
+        mutableStateOf(LocalDate.of(LocalDate.now().year, LocalDate.now().month, LocalDate.now().dayOfMonth + 1))
+    }
+    val formattedStartDate by remember {
+        derivedStateOf {
+            DateTimeFormatter
+                .ofPattern("MMM dd yyy")
+                .format(startDate)
+        }
+    }
+    val formattedEndDate by remember {
+        derivedStateOf {
+            DateTimeFormatter
+                .ofPattern("MMM dd yyy")
+                .format(endDate)
+        }
+    }
+    val dateDialogStateStartDate = rememberMaterialDialogState()
+    val dateDialogStateEndDate = rememberMaterialDialogState()
     val hotel = viewModel.hotel
 
     Scaffold(
@@ -185,7 +225,70 @@ fun ProductScreenHotel(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            SelectDate(modifier = Modifier)
+                            Column(modifier = Modifier,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Row {
+                                    Button(
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9000)),
+                                        onClick = { dateDialogStateStartDate.show() }) {
+                                        Row {
+                                            Icon(imageVector = Icons.Default.DateRange, contentDescription = null)
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(text = startText)
+                                            MaterialDialog(
+                                                dialogState = dateDialogStateStartDate,
+                                                buttons = {
+                                                    positiveButton("Ok")
+                                                    negativeButton("Cancel")
+                                                }
+                                            ) {
+                                                datepicker(
+                                                    initialDate = LocalDate.now(),
+                                                    title = "Start date",
+                                                    allowedDateValidator = {
+                                                        !it.isBefore(LocalDate.now())
+                                                    }
+                                                ){
+                                                    startDate = it
+                                                    startText = it.toString()
+                                                    viewModel.updateStartDate(it)
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                    Button(
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9000)),
+                                        onClick = { dateDialogStateEndDate.show() }) {
+                                        Row {
+                                            Icon(imageVector = Icons.Default.DateRange, contentDescription = null)
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(text = endText)
+                                            MaterialDialog(
+                                                dialogState = dateDialogStateEndDate,
+                                                buttons = {
+                                                    positiveButton("Ok")
+                                                    negativeButton("Cancel")
+                                                }
+                                            ) {
+                                                datepicker(
+                                                    initialDate = LocalDate.now(),
+                                                    title = "End date",
+                                                    allowedDateValidator = {
+                                                        !it.isBefore(startDate.plusDays(1))
+                                                    }
+                                                ){
+                                                    endDate = it
+                                                    endText =  it.toString()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -198,7 +301,7 @@ fun ProductScreenHotel(
                     GenericButton(label = "Add to cart", size = 30) {
                         viewModel.calculateDays()
                         if (hotel != null) {
-                            viewModel.addHotelToCart(hotel = hotel)
+                            viewModel.addHotelToCart(hotel = hotel, startDate, endDate)
                             navController.navigate(NavigationItem.CartScreen.route)
                         }
                     }

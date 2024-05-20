@@ -16,7 +16,7 @@ data class CartProductsEntity(
     val image: String,
     val userPoints: Int,
     val productType: ProductType,
-    val price: Double? = null,
+    val price: Double,
     val type: String? = null,
     val dateTime: String? = null,
     val rating: Double? = null,
