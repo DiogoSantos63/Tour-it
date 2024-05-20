@@ -33,6 +33,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CartComposeRestaurant(
     restaurant: CartProductsEntity,
+    isDetail: Boolean
 ) {
     val viewModel = koinViewModel<ProductViewModel>()
     val startDate = viewModel.selectedStartDate.collectAsState()
@@ -85,14 +86,16 @@ fun CartComposeRestaurant(
                         text = "${restaurant.cuisine}",
                         fontWeight = FontWeight.Bold,
                     )
-                    IconButton(
-                        onClick = { viewModel.removeProductCart(restaurant.productId) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete",
-                            tint = Color.Red
-                        )
+                    if(isDetail){
+                        IconButton(
+                            onClick = { viewModel.removeProductCart(restaurant.productId) }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Delete",
+                                tint = Color.Red
+                            )
+                        }
                     }
                 }
             }

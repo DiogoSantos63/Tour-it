@@ -72,7 +72,7 @@
     <content url="file://$MODULE_DIR$/../../../B_features/src/androidTestDebug" />
     <orderEntry type="jdk" jdkName="Android API 34, extension level 7 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Tour-it.B_features.main" scope="TEST" />
+    <orderEntry type="module" module-name="Tour-it_Android.Tour-it.B_features.main~1" scope="TEST" />
     <orderEntry type="module" module-name="Tour-it.C_datas.main" scope="TEST" />
     <orderEntry type="module" module-name="Tour-it.E_producer.main" scope="TEST" />
     <orderEntry type="module" module-name="Tour-it.D_sources.main" scope="TEST" />

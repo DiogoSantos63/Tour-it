@@ -170,9 +170,9 @@ fun CartScreen(
                     ) {
                         items(cartProducts) { product ->
                             when (product.productType) {
-                                ProductType.HOTEL -> CartComposeHotel(product)
-                                ProductType.EVENT -> CartComposeEvent(product)
-                                ProductType.RESTAURANT -> TODO()
+                                ProductType.HOTEL -> CartComposeHotel(product, true)
+                                ProductType.EVENT -> CartComposeEvent(product, true)
+                                ProductType.RESTAURANT -> CartComposeRestaurant(product, true)
                             }
                         }
                     }

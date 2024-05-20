@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -28,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,9 +44,15 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.e_producer.R
 import com.tour_it.features.authentication.AuthenticationViewModel
+import com.tour_it.features.cart.ui.CartComposeEvent
+import com.tour_it.features.cart.ui.CartComposeHotel
+import com.tour_it.features.cart.ui.CartComposeRestaurant
+import com.tour_it.features.productScreen.ProductViewModel
 import com.tour_it.producer.components.GenericButton
+import com.tour_it.producer.enums.ProductType
 import com.tour_it.producer.navigation.NavigationItem
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +63,10 @@ fun ProfileScreen(
 ) {
     val viewModel: AuthenticationViewModel = getViewModel()
     val userName = viewModel.userName.collectAsState()
+    val productVM: ProductViewModel = koinViewModel()
+    val cartProducts by productVM.mixedCartProductsList.collectAsState()
+    val userPoints = productVM.updateUserPoints()
+
 
     Scaffold(
         containerColor = Color(0xFF313131),
@@ -116,7 +129,7 @@ fun ProfileScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "120 Points", fontSize = 16.sp, color = Color.White
+                                text = "$userPoints points", fontSize = 16.sp, color = Color.White
                             )
                         }
                     }
@@ -128,7 +141,6 @@ fun ProfileScreen(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
                         Icon(
                             painter = painterResource(id = com.example.b_features.R.drawable.ic_book),
                             contentDescription = null,
@@ -156,7 +168,18 @@ fun ProfileScreen(
                             .clip(RoundedCornerShape(8.dp))
                     ) {
                         Column {
-
+                            LazyColumn(
+                                modifier = Modifier
+                                    .height(400.dp),
+                            ) {
+                                items(cartProducts) { product ->
+                                    when (product.productType) {
+                                        ProductType.HOTEL -> CartComposeHotel(product, false)
+                                        ProductType.EVENT -> CartComposeEvent(product, false)
+                                        ProductType.RESTAURANT -> CartComposeRestaurant(product, false)
+                                    }
+                                }
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(8.dp))

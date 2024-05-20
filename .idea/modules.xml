@@ -9,8 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/A_apps/Tour-it.A_apps.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/A_apps/Tour-it.A_apps.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.main.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it.B_features.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/C_datas/Tour-it.C_datas.iml" filepath="$PROJECT_DIR$/.idea/modules/C_datas/Tour-it.C_datas.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/C_datas/Tour-it.C_datas.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/C_datas/Tour-it.C_datas.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/C_datas/Tour-it.C_datas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/C_datas/Tour-it.C_datas.main.iml" />
@@ -23,6 +21,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/E_producer/Tour-it.E_producer.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/E_producer/Tour-it.E_producer.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/E_producer/Tour-it.E_producer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/E_producer/Tour-it.E_producer.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/E_producer/Tour-it.E_producer.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/E_producer/Tour-it.E_producer.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it_Android.Tour-it.B_features.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it_Android.Tour-it.B_features.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it_Android.Tour-it.B_features.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it_Android.Tour-it.B_features.main~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/B_features/Tour-it_Android.Tour-it.B_features.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/B_features/Tour-it_Android.Tour-it.B_features.unitTest.iml" />
     </modules>
   </component>
 </project>

@@ -16,10 +16,14 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.DatePickerColors
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -74,7 +78,13 @@ fun ProductScreenHotel(
         mutableStateOf(LocalDate.now())
     }
     var endDate by remember {
-        mutableStateOf(LocalDate.of(LocalDate.now().year, LocalDate.now().month, LocalDate.now().dayOfMonth + 1))
+        mutableStateOf(
+            LocalDate.of(
+                LocalDate.now().year,
+                LocalDate.now().month,
+                LocalDate.now().dayOfMonth + 1
+            )
+        )
     }
     val formattedStartDate by remember {
         derivedStateOf {
@@ -171,119 +181,133 @@ fun ProductScreenHotel(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Divider(
+                        thickness = 4.dp,
+                        color = Color.White,
+                        modifier = Modifier.padding(end = 240.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(60.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        model = hotel?.image.orEmpty(),
+                        contentDescription = null,
+                    )
+                    Text(
+                        text = hotel?.location?.street.orEmpty(),
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .padding(end = 200.dp, top = 8.dp)
+                    )
+
+                    Text(
+                        text = "${hotel?.pricePerNight} € per night",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .padding(end = 200.dp, top = 8.dp)
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Column {
+                        Text(
+                            text = "Select date",
+                            fontSize = 24.sp,
+                            color = Color.White
+                        )
+                        Divider(
                             thickness = 4.dp,
                             color = Color.White,
-                            modifier = Modifier.padding(end = 240.dp)
+                            modifier = Modifier.width(120.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.height(60.dp))
+                    Spacer(modifier = Modifier.height(50.dp))
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
+                            .clip(RoundedCornerShape(20)),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            model = hotel?.image.orEmpty(),
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = hotel?.location?.street.orEmpty(),
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            modifier = Modifier
-                                .padding(end = 200.dp, top = 8.dp)
-                        )
-
-                        Text(
-                            text = "${hotel?.pricePerNight} € per night",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            modifier = Modifier
-                                .padding(end = 200.dp, top = 8.dp)
-                        )
-                        Spacer(modifier = Modifier.height(30.dp))
-                        Column {
-                            Text(
-                                text = "Select date",
-                                fontSize = 24.sp,
-                                color = Color.White
-                            )
-                            Divider(
-                                thickness = 4.dp,
-                                color = Color.White,
-                                modifier = Modifier.width(120.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(50.dp))
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                                .clip(RoundedCornerShape(20)),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier = Modifier,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ) {
-                            Column(modifier = Modifier,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                Row {
-                                    Button(
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9000)),
-                                        onClick = { dateDialogStateStartDate.show() }) {
-                                        Row {
-                                            Icon(imageVector = Icons.Default.DateRange, contentDescription = null)
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            Text(text = startText)
-                                            MaterialDialog(
-                                                dialogState = dateDialogStateStartDate,
-                                                buttons = {
-                                                    positiveButton("Ok")
-                                                    negativeButton("Cancel")
+                            Row {
+                                Button(
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color(
+                                            0xFFFF9000
+                                        )
+                                    ),
+                                    onClick = { dateDialogStateStartDate.show() }) {
+                                    Row {
+                                        Icon(
+                                            imageVector = Icons.Default.DateRange,
+                                            contentDescription = null
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text(text = startText)
+                                        MaterialDialog(
+                                            dialogState = dateDialogStateStartDate,
+                                            buttons = {
+                                                positiveButton("Ok")
+                                                negativeButton("Cancel")
+                                            }
+                                        ) {
+                                            datepicker(
+                                                initialDate = LocalDate.now(),
+                                                title = "Start date",
+                                                allowedDateValidator = {
+                                                    !it.isBefore(LocalDate.now())
                                                 }
                                             ) {
-                                                datepicker(
-                                                    initialDate = LocalDate.now(),
-                                                    title = "Start date",
-                                                    allowedDateValidator = {
-                                                        !it.isBefore(LocalDate.now())
-                                                    }
-                                                ){
-                                                    startDate = it
-                                                    startText = it.toString()
-                                                    viewModel.updateStartDate(it)
-                                                }
+                                                startDate = it
+                                                startText = it.toString()
+                                                viewModel.updateStartDate(it)
                                             }
                                         }
-
                                     }
-                                    Spacer(modifier = Modifier.width(16.dp))
-                                    Button(
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9000)),
-                                        onClick = { dateDialogStateEndDate.show() }) {
-                                        Row {
-                                            Icon(imageVector = Icons.Default.DateRange, contentDescription = null)
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            Text(text = endText)
-                                            MaterialDialog(
-                                                dialogState = dateDialogStateEndDate,
-                                                buttons = {
-                                                    positiveButton("Ok")
-                                                    negativeButton("Cancel")
+
+                                }
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Button(
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color(
+                                            0xFFFF9000
+                                        )
+                                    ),
+                                    onClick = { dateDialogStateEndDate.show() }) {
+                                    Row {
+                                        Icon(
+                                            imageVector = Icons.Default.DateRange,
+                                            contentDescription = null
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text(text = endText)
+                                        MaterialDialog(
+                                            dialogState = dateDialogStateEndDate,
+                                            buttons = {
+                                                positiveButton("Ok")
+                                                negativeButton("Cancel")
+                                            }
+                                        ) {
+                                            datepicker(
+                                                initialDate = LocalDate.now(),
+                                                title = "End date",
+                                                allowedDateValidator = {
+                                                    !it.isBefore(startDate.plusDays(1))
                                                 }
                                             ) {
-                                                datepicker(
-                                                    initialDate = LocalDate.now(),
-                                                    title = "End date",
-                                                    allowedDateValidator = {
-                                                        !it.isBefore(startDate.plusDays(1))
-                                                    }
-                                                ){
-                                                    endDate = it
-                                                    endText =  it.toString()
-                                                }
+                                                endDate = it
+                                                endText = it.toString()
                                             }
                                         }
                                     }
@@ -292,20 +316,21 @@ fun ProductScreenHotel(
                         }
                     }
                 }
-            },
-            bottomBar = {
-                Row(
-                 modifier = Modifier
-                     .padding(horizontal = 8.dp)
-                ) {
-                    GenericButton(label = "Add to cart", size = 30) {
-                        viewModel.calculateDays()
-                        if (hotel != null) {
-                            viewModel.addHotelToCart(hotel = hotel, startDate, endDate)
-                            navController.navigate(NavigationItem.CartScreen.route)
-                        }
+            }
+        },
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+            ) {
+                GenericButton(label = "Add to cart", size = 30) {
+                    viewModel.calculateDays()
+                    if (hotel != null) {
+                        viewModel.addHotelToCart(hotel = hotel, startDate, endDate)
+                        navController.navigate(NavigationItem.CartScreen.route)
                     }
                 }
             }
-        )
-    }
+        }
+    )
+}

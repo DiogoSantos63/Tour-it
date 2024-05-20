@@ -68,7 +68,7 @@
     <orderEntry type="jdk" jdkName="Android API 34, extension level 7 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Tour-it.E_producer.main" />
-    <orderEntry type="module" module-name="Tour-it.B_features.main" />
+    <orderEntry type="module" module-name="Tour-it_Android.Tour-it.B_features.main~1" />
     <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-tooling-android:1.6.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.compose.runtime:runtime-android:1.6.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-android:1.6.6@aar" level="project" />
